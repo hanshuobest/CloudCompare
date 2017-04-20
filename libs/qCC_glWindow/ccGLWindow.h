@@ -481,6 +481,7 @@ public:
 	CCVector3d getCurrentUpDir() const;
 
 	//! Returns current parameters for this display (const version)
+	//  返回当前显示的参数
 	/** Warning: may return overridden parameters!
 	**/
 	const ccGui::ParamStruct& getDisplayParameters() const;
@@ -591,12 +592,14 @@ public: //stereo mode
 		StereoParams();
 
 		//! Glass/HMD type
-		enum GlassType {	RED_BLUE = 1,
-							BLUE_RED = 2,
-							RED_CYAN = 3,
-							CYAN_RED = 4,
-							NVIDIA_VISION = 5,
-							OCULUS = 6
+		enum GlassType
+		{
+			RED_BLUE = 1,
+			BLUE_RED = 2,
+			RED_CYAN = 3,
+			CYAN_RED = 4,
+			NVIDIA_VISION = 5,
+			OCULUS = 6
 		};
 
 		//! Whether stereo-mode is 'analgyph' or real stereo mode
@@ -1306,9 +1309,11 @@ protected: //members
 	ccPolyline* m_rectPickingPoly;
 
 	//! Overridden display parameter 
+	//  覆盖的现实参数
 	ccGui::ParamStruct m_overridenDisplayParameters;
 
 	//! Whether display parameters are overidden for this window
+	//  是否覆盖当前窗口的现实参数
 	bool m_overridenDisplayParametersEnabled;
 
 	//! Whether to display overlay entities or not (scale, tetrahedron, etc.)
@@ -1348,7 +1353,9 @@ protected: //members
 
 	//! Scheduler timer
 	QTimer m_scheduleTimer;
+
 	//! Scheduled full redraw (no LOD)
+	//  预定重绘时间（没有LOD）
 	qint64 m_scheduledFullRedrawTime;
 
 	//! Seterovision mode parameters

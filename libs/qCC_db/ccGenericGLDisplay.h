@@ -164,6 +164,7 @@ struct ccGLCameraParameters
 };
 
 //! Generic interface for GL displays
+//  GL显示的通用界面
 class ccGenericGLDisplay
 {
 public:
@@ -188,6 +189,7 @@ public:
 	virtual void refresh(bool only2D = false) = 0;
 
 	//! Invalidates current viewport setup
+	//  使当前视口设置无效
 	/** On next redraw, viewport information will be recomputed.
 	**/
 	virtual void invalidateViewport() = 0;
@@ -243,6 +245,7 @@ public:
 								const QFont& font=QFont()) = 0;
 
 	//! Returns the current OpenGL camera parameters
+	//  返回当前opengl相机参数
 	virtual void getGLCameraParameters(ccGLCameraParameters& params) = 0;
 
 	//! Converts 2D screen coordinates to 'centered' 2D OpenGL context coordinates

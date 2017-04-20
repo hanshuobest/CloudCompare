@@ -108,7 +108,8 @@ static int s_GlWindowNumber = 0;
 
 //On some versions of Qt, QGLWidget::renderText seems to need glColorf instead of glColorub!
 // See https://bugreports.qt-project.org/browse/QTBUG-6217
-template<class QOpenGLFunctions> inline static void glColor3ubv_safe(QOpenGLFunctions* glFunc, const unsigned char* rgb)
+template<class QOpenGLFunctions> 
+inline static void glColor3ubv_safe(QOpenGLFunctions* glFunc, const unsigned char* rgb)
 {
 	assert(glFunc);
 	//glColor3ubv(rgb);
@@ -116,7 +117,8 @@ template<class QOpenGLFunctions> inline static void glColor3ubv_safe(QOpenGLFunc
 						rgb[1] / 255.0f,
 						rgb[2] / 255.0f);
 }
-template<class QOpenGLFunctions> inline static void glColor4ubv_safe(QOpenGLFunctions* glFunc, const unsigned char* rgb)
+template<class QOpenGLFunctions> 
+inline static void glColor4ubv_safe(QOpenGLFunctions* glFunc, const unsigned char* rgb)
 {
 	assert(glFunc);
 	//glColor4ubv(rgb);
@@ -127,6 +129,7 @@ template<class QOpenGLFunctions> inline static void glColor4ubv_safe(QOpenGLFunc
 }
 
 //! Precomputed stuff for the 'hot zone'
+//  预先计算的东西
 struct HotZone
 {
 	//display font
