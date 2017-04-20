@@ -556,7 +556,11 @@ public:
 public: //LOD
 
 	//! Returns whether LOD is enabled on this display or not
-	inline bool isLODEnabled() const { return m_LODEnabled; }
+	//  返回是否在此显示器上启用LOD
+	inline bool isLODEnabled() const
+	{ 
+		return m_LODEnabled;
+	}
 
 	//! Enables or disables LOD on this display
 	/** \return success
@@ -854,6 +858,7 @@ protected: //rendering
 		bool clearColorLayer;
 
 		//3D central layer
+		//3D 中心层
 		bool draw3DPass;
 		bool useFBO;
 		bool draw3DCross;

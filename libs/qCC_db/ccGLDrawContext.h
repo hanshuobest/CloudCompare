@@ -71,9 +71,12 @@ enum CC_DRAWING_FLAGS
 #define MACRO_VirtualTransEnabled(context) (context.drawingFlags & CC_VIRTUAL_TRANS_ENABLED)
 
 //! Display context
+
+//  显示上下文
 struct ccGLDrawContext
 {
 	//! Drawing options (see below)
+	//  图选项（见下文）
 	int drawingFlags;
 	
 	//! GL screen width
@@ -109,19 +112,30 @@ struct ccGLDrawContext
 	ccColor::Rgbub bbDefaultCol;
 
 	//! Whether to decimate big clouds when updating the 3D view
+	//  是否在更新3D视图时抽取大云
 	bool decimateCloudOnMove;
+
 	//! Minimum number of points for activating LOD display
+	//  激活LOD显示的最小点数
 	unsigned minLODPointCount;
+
 	//! Current level for LOD display
+	//  LOD显示的当前级别
 	unsigned char currentLODLevel;
+
 	//! Wheter more points are available or not at the current level
+	//  当前层级是否有更多的点可用
 	bool moreLODPointsAvailable;
+
 	//! Wheter higher levels are available or not
+	//  是否有更高的层级可用
 	bool higherLODLevelsAvailable;
 
 	//! Whether to decimate big meshes when rotating the camera
 	bool decimateMeshOnMove;
+
 	//! Minimum number of triangles for activating LOD display
+	//  激活LOD最小三角形数量
 	unsigned minLODTriangleCount;
 
 	//! Currently displayed color scale (the corresponding scalar field in fact)
@@ -131,6 +145,7 @@ struct ccGLDrawContext
 	ccColorRampShader* colorRampShader;
 	//! Custom rendering shader (OpenGL 3.3+)
 	ccShader* customRenderingShader;
+
 	//! Use VBOs for faster display
 	bool useVBOs;
 
@@ -154,6 +169,7 @@ struct ccGLDrawContext
 	unsigned stereoPassIndex;
 
 	//! Whether to draw rounded points (instead of sqaures)
+	//  是否绘制圆点而不是正方形
 	bool drawRoundedPoints;
 
 	//Default constructor
