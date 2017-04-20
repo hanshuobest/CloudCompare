@@ -92,6 +92,7 @@ bool ManualSegmentationTools::isPointInsidePoly(const CCVector2& P, const Generi
 		polyVertices->getPoint(i % vertCount, B);
 
 		//Point Inclusion in Polygon Test (inspired from W. Randolph Franklin - WRF)
+		//点包含在多边形的测试
 		//The polyline is considered as a 2D polyline here!
 		if ((B.y <= P.y && P.y < A.y) || (A.y <= P.y && P.y < B.y))
 		{
@@ -156,7 +157,7 @@ ReferenceCloud* ManualSegmentationTools::segment(	GenericIndexedCloudPersist* cl
 	{
 		const ScalarType dist = cloud->getPointScalarValue(i);
 		//we test if its associated scalar value falls inside the specified interval
-		if ((dist >= minDist && dist <= maxDist) ^ outside)
+		if ((dist >= minDist && dist <= maxDist) ^ outside)//^异或
 		{
 			if (!Y->addPointIndex(i))
 			{

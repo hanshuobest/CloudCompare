@@ -44,20 +44,35 @@ public:
 	virtual ~ReferenceCloud();
 
 	//**** inherited form GenericCloud ****//
-	inline virtual unsigned size() const { return m_theIndexes->currentSize(); }
+	inline virtual unsigned size() const 
+	{ 
+		return m_theIndexes->currentSize();
+	}
 	virtual void forEach(genericPointAction& action);
 	virtual void getBoundingBox(CCVector3& bbMin, CCVector3& bbMax);
-	inline virtual unsigned char testVisibility(const CCVector3& P) const { assert(m_theAssociatedCloud); return m_theAssociatedCloud->testVisibility(P); }
+	inline virtual unsigned char testVisibility(const CCVector3& P) const 
+	{
+		assert(m_theAssociatedCloud); 
+		return m_theAssociatedCloud->testVisibility(P);
+	}
 	inline virtual void placeIteratorAtBegining() { m_globalIterator = 0; }
 	inline virtual const CCVector3* getNextPoint() { assert(m_theAssociatedCloud); return (m_globalIterator < size() ? m_theAssociatedCloud->getPoint(m_theIndexes->getValue(m_globalIterator++)) : 0); }
 	inline virtual bool enableScalarField() { assert(m_theAssociatedCloud); return m_theAssociatedCloud->enableScalarField(); }
 	inline virtual bool isScalarFieldEnabled() const { assert(m_theAssociatedCloud); return m_theAssociatedCloud->isScalarFieldEnabled(); }
 	inline virtual void setPointScalarValue(unsigned pointIndex, ScalarType value) { assert(m_theAssociatedCloud && pointIndex<size()); m_theAssociatedCloud->setPointScalarValue(m_theIndexes->getValue(pointIndex),value); }
-	inline virtual ScalarType getPointScalarValue(unsigned pointIndex) const { assert(m_theAssociatedCloud && pointIndex<size()); return m_theAssociatedCloud->getPointScalarValue(m_theIndexes->getValue(pointIndex)); }
+	inline virtual ScalarType getPointScalarValue(unsigned pointIndex) const
+	{ 
+		assert(m_theAssociatedCloud && pointIndex<size()); 
+		return m_theAssociatedCloud->getPointScalarValue(m_theIndexes->getValue(pointIndex));
+	}
 
 	//**** inherited form GenericIndexedCloud ****//
 	inline virtual const CCVector3* getPoint(unsigned index) { assert(m_theAssociatedCloud && index < size()); return m_theAssociatedCloud->getPoint(m_theIndexes->getValue(index)); }
-	inline virtual void getPoint(unsigned index, CCVector3& P) const { assert(m_theAssociatedCloud && index < size()); m_theAssociatedCloud->getPoint(m_theIndexes->getValue(index),P); }
+	inline virtual void getPoint(unsigned index, CCVector3& P) const 
+	{ 
+		assert(m_theAssociatedCloud && index < size()); 
+		m_theAssociatedCloud->getPoint(m_theIndexes->getValue(index),P);
+	}
 
 	//**** inherited form GenericIndexedCloudPersist ****//
 	inline virtual const CCVector3* getPointPersistentPtr(unsigned index) { assert(m_theAssociatedCloud && index < size()); return m_theAssociatedCloud->getPointPersistentPtr(m_theIndexes->getValue(index)); }
@@ -154,7 +169,11 @@ public:
 	bool add(const ReferenceCloud& cloud);
 	
 	//! Invalidates the bounding-box
-	inline void invalidateBoundingBox() { m_validBB = false; }
+	//  使边界无效
+	inline void invalidateBoundingBox()
+	{
+		m_validBB = false;
+	}
 
 protected:
 
@@ -170,6 +189,7 @@ protected:
 	typedef GenericChunkedArray<1,unsigned> ReferencesContainer;
 
 	//! Indexes of (some of) the associated cloud points
+	//  关联点云的索引
 	ReferencesContainer* m_theIndexes;
 
 	//! Iterator on the point references container

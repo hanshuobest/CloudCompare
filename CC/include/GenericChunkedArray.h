@@ -725,7 +725,8 @@ protected:
 };
 
 //! Specialization of GenericChunkedArray for the case where N=1 (speed up)
-template <class ElementType> class GenericChunkedArray<1, ElementType> : public CCShareable
+template <class ElementType>
+class GenericChunkedArray<1, ElementType> : public CCShareable
 {
 public:
 
@@ -768,19 +769,28 @@ public:
 	/** This corresponds to the number of inserted elements
 		\return the number of elements actually inserted into this array
 	**/
-	inline unsigned currentSize() const { return m_count; }
+	inline unsigned currentSize() const 
+	{ 
+		return m_count;
+	}
 
 	//! Returns the maximum array size
 	/** This is the total (reserved) size, not only the number of inserted elements
 		\return the number of elements that can be stored in this array
 	**/
-	inline unsigned capacity() const { return m_capacity; }
+	inline unsigned capacity() const
+	{ 
+		return m_capacity; 
+	}
 
 	//! Specifies if the array has been initialized or not
 	/** The array is initialized after a call to reserve or resize (with at least one element).
 		\return true if the array has been alreay initialized, and false otherwise
 	**/
-	inline bool isAllocated() const { return capacity() != 0; }
+	inline bool isAllocated() const
+	{ 
+		return capacity() != 0; 
+	}
 
 	//! Returns number of components
 	inline unsigned dim() const {return 1;}
@@ -1099,6 +1109,7 @@ public:
 
 	//! Returns the ith value stored in the array
 	/** \param index the index of the element to return
+	//  返回存储在数组中的第i个值
 		\return a pointer to the ith element
 	**/
 	inline ElementType& getValue(unsigned index)
@@ -1129,7 +1140,10 @@ public:
 	/** \param index the index of the element to update
 		\param value the new value for the element
 	**/
-	inline void setValue(unsigned index, const ElementType& value) { getValue(index) = value; }
+	inline void setValue(unsigned index, const ElementType& value)
+	{
+		getValue(index) = value;
+	}
 
 	//! Returns the element with the minimum value stored in the array
 	/** The computeMinAndMax method must be called prior to this one

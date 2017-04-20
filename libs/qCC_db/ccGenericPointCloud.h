@@ -164,7 +164,11 @@ public:
 	typedef GenericChunkedArray<1,unsigned char> VisibilityTableType;
 
 	//! Returns associated visiblity array
-	virtual inline VisibilityTableType* getTheVisibilityArray() { return m_pointsVisibility; }
+	//  返回相关联的可见性数组
+	virtual inline VisibilityTableType* getTheVisibilityArray()
+	{
+		return m_pointsVisibility; 
+	}
 
 	//! Returns a ReferenceCloud equivalent to the visiblity array
 	/** \param visTable visibility table (optional, otherwise the cloud's default one will be used)

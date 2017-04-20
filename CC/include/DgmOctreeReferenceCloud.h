@@ -52,7 +52,12 @@ public:
 	inline virtual ScalarType getPointScalarValue(unsigned pointIndex) const { assert(pointIndex < size()); return static_cast<ScalarType>(m_set->at(pointIndex).squareDistd); }
 	//**** inherited form GenericIndexedCloud ****//
 	inline virtual const CCVector3* getPoint(unsigned index) { assert(index < size()); return m_set->at(index).point; }
-	inline virtual void getPoint(unsigned index, CCVector3& P) const  { assert(index < size()); P = *m_set->at(index).point; }
+
+	inline virtual void getPoint(unsigned index, CCVector3& P) const 
+	{
+		assert(index < size()); 
+		P = *m_set->at(index).point; 
+	}
 	//**** inherited form GenericIndexedCloudPersist ****//
 	inline virtual const CCVector3* getPointPersistentPtr(unsigned index) { assert(index < size()); return m_set->at(index).point; }
 

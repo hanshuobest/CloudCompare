@@ -25,6 +25,7 @@
 class ccGLWindow;
 
 //! Generic overlay dialog interface
+//  
 class ccOverlayDialog : public QDialog
 {
 	Q_OBJECT

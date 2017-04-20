@@ -70,7 +70,10 @@ public:
 		\param P the 3D point to test
 		\return visibility (default: POINT_VISIBLE)
 	**/
-	virtual inline unsigned char testVisibility(const CCVector3& P) const { return POINT_VISIBLE; }
+	virtual inline unsigned char testVisibility(const CCVector3& P) const 
+	{ 
+		return POINT_VISIBLE; 
+	}
 
 	//! Sets the cloud iterator at the beginning
 	/**	Virtual method to handle the cloud global iterator
@@ -105,6 +108,7 @@ public:
 	virtual void setPointScalarValue(unsigned pointIndex, ScalarType value) = 0;
 
 	//! Returns the ith point associated scalar value
+	//  返回第i个点关联的标量值
 	virtual ScalarType getPointScalarValue(unsigned pointIndex) const = 0;
 };
 

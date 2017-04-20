@@ -6007,7 +6007,7 @@ void MainWindow::freezeUI(bool state)
 
 	//freeze plugin toolbars
 	{
-		for (int i=0; i<m_stdPluginsToolbars.size(); ++i)
+		for (int i = 0; i < m_stdPluginsToolbars.size(); ++i)
 			m_stdPluginsToolbars[i]->setDisabled(state);
 	}
 

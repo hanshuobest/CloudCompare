@@ -641,6 +641,7 @@ void ccGraphicalSegmentationTool::segment(bool keepPointsInside)
 		unsigned cloudSize = cloud->size();
 
 		//we project each point and we check if it falls inside the segmentation polyline
+		//我们对每个点进行投影，我们检查它是否落入分割折线内
 #if defined(_OPENMP)
 #pragma omp parallel for
 #endif
@@ -653,12 +654,12 @@ void ccGraphicalSegmentationTool::segment(bool keepPointsInside)
 				CCVector3d Q2D;
 				camera.project(*P3D, Q2D);
 
-				CCVector2 P2D(	static_cast<PointCoordinateType>(Q2D.x-half_w),
-								static_cast<PointCoordinateType>(Q2D.y-half_h) );
-				
+				CCVector2 P2D(static_cast<PointCoordinateType>(Q2D.x - half_w),
+					static_cast<PointCoordinateType>(Q2D.y - half_h));
+
 				bool pointInside = CCLib::ManualSegmentationTools::isPointInsidePoly(P2D, m_segmentationPoly);
 
-				visibilityArray->setValue(i, keepPointsInside != pointInside ? POINT_HIDDEN : POINT_VISIBLE );
+				visibilityArray->setValue(i, keepPointsInside != pointInside ? POINT_HIDDEN : POINT_VISIBLE);
 			}
 		}
 	}

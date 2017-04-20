@@ -623,8 +623,11 @@ protected:
 
 	//! Camera params dialog
 	ccCameraParamEditDlg* m_cpeDlg;
+
 	//! Graphical segmentation dialog
+	//  图形分割工具对话框
 	ccGraphicalSegmentationTool* m_gsTool;
+
 	//! Polyline tracing tool
 	ccTracePolylineTool * m_tplTool;
 	//! Section extraction dialog
