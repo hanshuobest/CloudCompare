@@ -37,9 +37,11 @@ class ccGui
 public:
 
 	//! GUI parameters
+	//  界面参数结构体
 	struct ParamStruct
 	{
 		//! Light diffuse color (RGBA)
+		//  光漫射颜色
 		ccColor::Rgbaf lightDiffuseColor;
 		//! Light ambient color (RGBA)
 		ccColor::Rgbaf lightAmbientColor;
@@ -70,16 +72,24 @@ public:
 		
 		//! Use background gradient
 		bool drawBackgroundGradient;
+
 		//! Decimate meshes when moved
 		bool decimateMeshOnMove;
+
+		//  抽取时最小网格尺寸
 		//! Min mesh size for decimation
 		unsigned minLoDMeshSize;
+
 		//! Decimate clouds when moved
+		//  移动时抽取的点云数量
 		bool decimateCloudOnMove;
+
 		//! Min cloud size for decimation
+		//  用于抽取的最小点云数量
 		unsigned minLoDCloudSize;
 		//! Display cross in the middle of the screen
 		bool displayCross;
+
 		//! Whether to use VBOs for faster display
 		bool useVBOs;
 
@@ -108,12 +118,14 @@ public:
 		double zoomSpeed;
 
 		//! Octree computation (for picking) behaviors
+		//  定义八叉树计算（拣选）行为
 		enum ComputeOctreeForPicking { ALWAYS = 0, ASK_USER = 1, NEVER = 2 };
 
 		//! Octree computation (for picking) behavior
 		ComputeOctreeForPicking autoComputeOctree;
 
 		//! Whether to draw rounded points (slower) or not
+		//  是否绘制圆点
 		bool drawRoundedPoints;
 
 		//! Default constructor
@@ -135,6 +147,7 @@ public:
 	};
 
 	//! Returns the stored values of each parameter.
+	//  返回每个参数存储的值
 	static const ParamStruct& Parameters();
 
 	//! Sets GUI parameters

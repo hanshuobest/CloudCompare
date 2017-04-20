@@ -249,7 +249,9 @@ public:
 	virtual void getGLCameraParameters(ccGLCameraParameters& params) = 0;
 
 	//! Converts 2D screen coordinates to 'centered' 2D OpenGL context coordinates
+	//  将2D屏幕坐标转换为“居中”的2D OpenGL上下文坐标
 	virtual QPointF toCenteredGLCoordinates(int x, int y) const = 0;
+
 	//! Converts 2D screen coordinates to 'corner-based' 2D OpenGL context coordinates
 	virtual QPointF toCornerGLCoordinates(int x, int y) const = 0;
 
