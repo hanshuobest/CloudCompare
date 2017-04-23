@@ -23,7 +23,9 @@
 #include <QOpenGLFunctions_2_1>
 
 //! F.B.O. encapsulation
+//  FBO封装
 /** Compared to the QOpenGLFramebufferObject class, this one offers the possibility to:
+  * 自定义的FBO封装
 	- get the attached depth texture ID
 	- attach a custom COLOR texture
 **/
