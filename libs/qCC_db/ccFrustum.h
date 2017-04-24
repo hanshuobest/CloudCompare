@@ -25,6 +25,7 @@
 //Local
 #include "ccGLMatrix.h"
 
+// 平面方程类
 class Plane
 {
 public:
@@ -57,6 +58,7 @@ public:
 
 	}
 
+	// 计算点p到平面的距离
 	float distance(const CCVector3f& p) const
 	{
 		return normal.dot(p) + constCoef;
@@ -64,8 +66,8 @@ public:
 
 public: //members
 
-	CCVector3f normal;
-	float constCoef;
+	CCVector3f normal;//法向量
+	float constCoef;//常量系数
 };
 
 class AABox : public AABB<float>
@@ -141,6 +143,7 @@ public: //members
 	float d;
 };
 
+//平截头体
 class Frustum
 {
 public:
@@ -168,6 +171,7 @@ public:
 
 public: //Intersection tests
 
+	//交叉测试，计算点是否在平头截体内
 	Intersection pointInFrustum(const CCVector3f& p) const
 	{
 		for (int i = 0; i < 6; i++)
@@ -198,6 +202,7 @@ public: //Intersection tests
 		return result;
 	}
 
+	// 判断轴对齐边界框是否在视锥体中
 	Intersection boxInFrustum(const AABox& box) const
 	{
 		Intersection result = INSIDE;
@@ -238,7 +243,9 @@ protected: //protected methods
 		FARP = 5
 	};
 
-	template <typename T> void initfromMPMatrix(const ccGLMatrixTpl<T>& MP)
+	// 计算六个平面方程
+	template <typename T> 
+	void initfromMPMatrix(const ccGLMatrixTpl<T>& MP)
 	{
 		const T* m = MP.data();
 		pl[NEARP].setCoefficients
@@ -290,9 +297,10 @@ protected: //protected methods
 			);
 	}
 
-protected: //members
+protected: 
+	//members
 
-	Plane pl[6];
+	Plane pl[6];//平头椎体的六个平面方程
 };
 
 #endif // CC_FRUSTUM_HEADER

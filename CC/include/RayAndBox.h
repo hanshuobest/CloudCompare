@@ -59,7 +59,8 @@ template <typename T > struct Ray
 };
 
 //! Simple axis aligned box structure
-template <typename T > struct AABB
+template <typename T > 
+struct AABB
 {
 	AABB(const Vector3Tpl<T>& minCorner, const Vector3Tpl<T>& maxCorner)
 	{
@@ -112,7 +113,7 @@ template <typename T > struct AABB
 		return true;
 	}
 
-	Vector3Tpl<T> corners[2];
+	Vector3Tpl<T> corners[2];//保存最大和最小边界点
 };
 
 #endif //RAY_AND_BOX_HEADER

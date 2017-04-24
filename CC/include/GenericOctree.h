@@ -25,14 +25,15 @@
 namespace CCLib
 {
 
-//! A generic octree interface for data communication between library and client applications
-class CC_CORE_LIB_API GenericOctree
-{
-public:
+	//! A generic octree interface for data communication between library and client applications
+	//  通用八叉树接口
+	class CC_CORE_LIB_API GenericOctree
+	{
+	public:
 
-	//! Default destructor
-    virtual ~GenericOctree() {}
-};
+		//! Default destructor
+		virtual ~GenericOctree() {}
+	};
 
 }
 

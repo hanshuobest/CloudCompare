@@ -52,12 +52,18 @@ struct LODLevelDesc
 //! L.O.D. indexes set
 typedef GenericChunkedArray<1, unsigned> LODIndexSet;
 
-//! L.O.D. (Level of Detail) structure
+//！LOD结构体类
 class ccPointCloudLOD
 {
 public:
 	//! Structure initialization state
-	enum State { NOT_INITIALIZED, UNDER_CONSTRUCTION, INITIALIZED, BROKEN };
+	enum State
+	{ 
+		NOT_INITIALIZED, 
+		UNDER_CONSTRUCTION, 
+		INITIALIZED, 
+		BROKEN 
+	};
 
 	//! Default constructor
 	ccPointCloudLOD();
@@ -65,15 +71,28 @@ public:
 	virtual ~ccPointCloudLOD();
 
 	//! Initializes the construction process (asynchronous)
+	//	初始化构建过程（异步执行）
 	bool init(ccPointCloud* cloud);
 
 	//! Locks the structure
-	inline void lock() { m_mutex.lock(); }
+	inline void lock()
+	{ 
+		m_mutex.lock(); 
+	}
 	//! Unlocks the structure
-	inline void unlock() { m_mutex.unlock(); }
+	inline void unlock()
+	{ 
+		m_mutex.unlock();
+	}
 
 	//! Returns the current state
-	inline State getState() { lock(); State state = m_state; unlock(); return state; }
+	inline State getState() 
+	{ 
+		lock(); 
+		State state = m_state; 
+		unlock(); 
+		return state;
+	}
 
 	//! Clears the structure
 	void clear();
@@ -90,8 +109,11 @@ public:
 	//! Returns whether the structure is initialized or not
 	inline bool isUnderConstruction() { return getState() == UNDER_CONSTRUCTION; }
 
-	//! Returns whether the structure is broken or not
-	inline bool isBroken() { return getState() == BROKEN; }
+	//  判断结构是否损坏
+	inline bool isBroken()	
+	{ 
+		return getState() == BROKEN;
+	}
 
 	//! Returns the maximum accessible level
 	inline unsigned char maxLevel() { QMutexLocker locker(&m_mutex); return (m_state == INITIALIZED ? static_cast<unsigned char>(std::max<size_t>(1, m_levels.size()))-1 : 0); }
@@ -252,6 +274,7 @@ protected: //members
 	ccOctree::Shared m_octree;
 
 	//! Computing thread
+	//	开辟计算LOD的线程
 	ccPointCloudLODThread* m_thread;
 
 	//! For concurrent access

@@ -24,6 +24,7 @@
 class ccPointCloud;
 
 //! Generic primitive interface
+//  通用院士界面
 class QCC_DB_LIB_API ccGenericPrimitive : public ccMesh
 {
 public:
