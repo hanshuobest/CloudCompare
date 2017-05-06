@@ -34,7 +34,8 @@ class ccPolyline;
 class ccPointCloud;
 class ccGLWindow;
 
-//! Graphical segmentation mechanism (with polyline)
+
+//! 带折线的图形分割机制
 class ccGraphicalSegmentationTool : public ccOverlayDialog, public Ui::GraphicalSegmentationDlg
 {
 	Q_OBJECT
@@ -54,10 +55,15 @@ public:
 	bool addEntity(ccHObject* anObject);
 	
 	//! Returns the number of entites currently in the the 'to be segmented' pool
+	//！返回当前在待分割池中实体的数量
 	unsigned getNumberOfValidEntities() const;
 
 	//! Get a pointer to the polyline that has been segmented
-	ccPolyline *getPolyLine() {return m_segmentationPoly;}
+	//! 获取已被分段的折线的指针
+	ccPolyline *getPolyLine()
+	{
+		return m_segmentationPoly;
+	}
 
 	//! Returns the active 'to be segmented' set
 	QSet<ccHObject*>& entities()
@@ -76,7 +82,11 @@ public:
 	virtual void stop(bool accepted);
 
 	//! Returns whether hidden parts should be delete after segmentation
-	bool deleteHiddenParts() const { return m_deleteHiddenParts; }
+	//! 分割后是否隐藏删除的部分
+	bool deleteHiddenParts() const 
+	{ 
+		return m_deleteHiddenParts;
+	}
 
 	//! Remove entities from the 'to be segmented' pool
 	/** \warning 'unallocateVisibilityArray' will be called on all point clouds
@@ -109,6 +119,7 @@ protected slots:
 protected:
 
 	//! Whether to allow or not to exort the current segmentation polyline
+	//! 是否允许导出当前分割折线
 	void allowPolylineExport(bool state);
 
 	//! Set of entities to be segmented
@@ -135,14 +146,14 @@ protected:
 
 	//! Segmentation polyline
 	ccPolyline* m_segmentationPoly;
-	//! Segmentation polyline vertices
-	ccPointCloud* m_polyVertices;
+
+	ccPointCloud* m_polyVertices;//分割折线的顶点
 
 	//! Selection mode
 	bool m_rectangularSelection;
 
 	//! Whether to delete hidden parts after segmentation
-	bool m_deleteHiddenParts;
+	bool m_deleteHiddenParts;//分割后是否删除隐藏的部分
 };
 
 #endif //CC_GRAPHICAL_SEGMENTATION_TOOLS_HEADER

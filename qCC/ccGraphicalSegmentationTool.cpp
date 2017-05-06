@@ -60,20 +60,20 @@ ccGraphicalSegmentationTool::ccGraphicalSegmentationTool(QWidget* parent)
 
 	setupUi(this);
 
-	connect(inButton,							SIGNAL(clicked()),		this,	SLOT(segmentIn()));
-	connect(outButton,							SIGNAL(clicked()),		this,	SLOT(segmentOut()));
-	connect(razButton,							SIGNAL(clicked()),		this,	SLOT(reset()));
-	connect(validButton,						SIGNAL(clicked()),		this,	SLOT(apply()));
-	connect(validAndDeleteButton,				SIGNAL(clicked()),		this,	SLOT(applyAndDelete()));
-	connect(cancelButton,						SIGNAL(clicked()),		this,	SLOT(cancel()));
-	connect(pauseButton,						SIGNAL(toggled(bool)),	this,	SLOT(pauseSegmentationMode(bool)));
+	connect(inButton, SIGNAL(clicked()), this, SLOT(segmentIn()));
+	connect(outButton, SIGNAL(clicked()), this, SLOT(segmentOut()));
+	connect(razButton, SIGNAL(clicked()), this, SLOT(reset()));
+	connect(validButton, SIGNAL(clicked()), this, SLOT(apply()));
+	connect(validAndDeleteButton, SIGNAL(clicked()), this, SLOT(applyAndDelete()));
+	connect(cancelButton, SIGNAL(clicked()), this, SLOT(cancel()));
+	connect(pauseButton, SIGNAL(toggled(bool)), this, SLOT(pauseSegmentationMode(bool)));
 
 	//selection modes
-	connect(actionSetPolylineSelection,			SIGNAL(triggered()),	this,	SLOT(doSetPolylineSelection()));
-	connect(actionSetRectangularSelection,		SIGNAL(triggered()),	this,	SLOT(doSetRectangularSelection()));
+	connect(actionSetPolylineSelection, SIGNAL(triggered()), this, SLOT(doSetPolylineSelection()));
+	connect(actionSetRectangularSelection, SIGNAL(triggered()), this, SLOT(doSetRectangularSelection()));
 	//import/export options
-	connect(actionUseExistingPolyline,			SIGNAL(triggered()),	this,	SLOT(doActionUseExistingPolyline()));
-	connect(actionExportSegmentationPolyline,	SIGNAL(triggered()),	this,	SLOT(doExportSegmentationPolyline()));
+	connect(actionUseExistingPolyline, SIGNAL(triggered()), this, SLOT(doActionUseExistingPolyline()));
+	connect(actionExportSegmentationPolyline, SIGNAL(triggered()), this, SLOT(doExportSegmentationPolyline()));
 
 	//add shortcuts
 	addOverridenShortcut(Qt::Key_Space);  //space bar for the "pause" button
@@ -131,7 +131,7 @@ ccGraphicalSegmentationTool::~ccGraphicalSegmentationTool()
 
 void ccGraphicalSegmentationTool::onShortcutTriggered(int key)
 {
- 	switch(key)
+	switch (key)
 	{
 	case Qt::Key_Space:
 		pauseButton->toggle();
@@ -187,7 +187,7 @@ bool ccGraphicalSegmentationTool::linkWith(ccGLWindow* win)
 			m_segmentationPoly->setDisplay(0);
 		}
 	}
-	
+
 	if (m_associatedWin)
 	{
 		connect(m_associatedWin, SIGNAL(leftButtonClicked(int, int)), this, SLOT(addPointToPolyline(int, int)));
@@ -251,10 +251,10 @@ void ccGraphicalSegmentationTool::stop(bool accepted)
 	if (m_associatedWin)
 	{
 		m_associatedWin->displayNewMessage("Segmentation [OFF]",
-											ccGLWindow::UPPER_CENTER_MESSAGE,
-											false,
-											2,
-											ccGLWindow::MANUAL_SEGMENTATION_MESSAGE);
+			ccGLWindow::UPPER_CENTER_MESSAGE,
+			false,
+			2,
+			ccGLWindow::MANUAL_SEGMENTATION_MESSAGE);
 
 		m_associatedWin->setInteractionMode(ccGLWindow::TRANSFORM_CAMERA());
 		m_associatedWin->setPickingMode(ccGLWindow::DEFAULT_PICKING);
@@ -310,9 +310,9 @@ bool ccGraphicalSegmentationTool::addEntity(ccHObject* entity)
 			}
 			//or the parent of its child mesh!
 			ccHObject::Container meshes;
-			if (cloud->filterChildren(meshes,false,CC_TYPES::MESH) != 0)
+			if (cloud->filterChildren(meshes, false, CC_TYPES::MESH) != 0)
 			{
-				for (unsigned i=0; i<meshes.size(); ++i)
+				for (unsigned i = 0; i < meshes.size(); ++i)
 					if (ccHObjectCaster::ToGenericMesh(meshes[i])->getAssociatedCloud() == cloud)
 					{
 						ccLog::Warning(QString("[Graphical Segmentation Tool] Can't segment mesh vertices '%1' directly! Select its child mesh instead!").arg(entity->getName()));
@@ -325,7 +325,7 @@ bool ccGraphicalSegmentationTool::addEntity(ccHObject* entity)
 		m_toSegment.insert(cloud);
 
 		//automatically add cloud's children
-		for (unsigned i=0; i<entity->getChildrenNumber(); ++i)
+		for (unsigned i = 0; i < entity->getChildrenNumber(); ++i)
 			result |= addEntity(entity->getChild(i));
 	}
 	else if (entity->isKindOf(CC_TYPES::MESH))
@@ -403,8 +403,8 @@ void ccGraphicalSegmentationTool::updatePolyLine(int x, int y, Qt::MouseButtons 
 	//new point (expressed relatively to the screen center)
 	QPointF pos2D = m_associatedWin->toCenteredGLCoordinates(x, y);
 	CCVector3 P(static_cast<PointCoordinateType>(pos2D.x()),
-				static_cast<PointCoordinateType>(pos2D.y()),
-				0);
+		static_cast<PointCoordinateType>(pos2D.y()),
+		0);
 
 	if (m_state & RECTANGLE)
 	{
@@ -416,14 +416,14 @@ void ccGraphicalSegmentationTool::updatePolyLine(int x, int y, Qt::MouseButtons 
 		CCVector3* B = const_cast<CCVector3*>(m_polyVertices->getPointPersistentPtr(1));
 		CCVector3* C = const_cast<CCVector3*>(m_polyVertices->getPointPersistentPtr(2));
 		CCVector3* D = const_cast<CCVector3*>(m_polyVertices->getPointPersistentPtr(3));
-		*B = CCVector3(A->x,P.y,0);
+		*B = CCVector3(A->x, P.y, 0);
 		*C = P;
-		*D = CCVector3(P.x,A->y,0);
+		*D = CCVector3(P.x, A->y, 0);
 
 		if (vertCount != 4)
 		{
 			m_segmentationPoly->clear();
-			if (!m_segmentationPoly->addPointIndex(0,4))
+			if (!m_segmentationPoly->addPointIndex(0, 4))
 			{
 				ccLog::Error("Out of memory!");
 				allowPolylineExport(false);
@@ -437,7 +437,7 @@ void ccGraphicalSegmentationTool::updatePolyLine(int x, int y, Qt::MouseButtons 
 		if (vertCount < 2)
 			return;
 		//we replace last point by the current one
-		CCVector3* lastP = const_cast<CCVector3*>(m_polyVertices->getPointPersistentPtr(vertCount-1));
+		CCVector3* lastP = const_cast<CCVector3*>(m_polyVertices->getPointPersistentPtr(vertCount - 1));
 		*lastP = P;
 	}
 
@@ -461,19 +461,19 @@ void ccGraphicalSegmentationTool::addPointToPolyline(int x, int y)
 	unsigned vertCount = m_polyVertices->size();
 
 	//particular case: we close the rectangular selection by a 2nd click
+	//特殊情况，我们通过二次单击关闭矩形选择
 	if (m_rectangularSelection && vertCount == 4 && (m_state & RUNNING))
 		return;
 
 	//new point
 	QPointF pos2D = m_associatedWin->toCenteredGLCoordinates(x, y);
-	CCVector3 P(static_cast<PointCoordinateType>(pos2D.x()),
-				static_cast<PointCoordinateType>(pos2D.y()),
-				0);
+	CCVector3 P(static_cast<PointCoordinateType>(pos2D.x()),static_cast<PointCoordinateType>(pos2D.y()),0);
 
 	//CTRL key pressed at the same time?
 	bool ctrlKeyPressed = m_rectangularSelection || ((QApplication::keyboardModifiers() & Qt::ControlModifier) == Qt::ControlModifier);
 
 	//start new polyline?
+	//开始新的多线
 	if (((m_state & RUNNING) == 0) || vertCount == 0 || ctrlKeyPressed)
 	{
 		//reset state
@@ -503,7 +503,7 @@ void ccGraphicalSegmentationTool::addPointToPolyline(int x, int y)
 		//we were already in 'polyline' mode?
 		if (m_state & POLYLINE)
 		{
-			if (!m_polyVertices->reserve(vertCount+1))
+			if (!m_polyVertices->reserve(vertCount + 1))
 			{
 				ccLog::Error("Out of memory!");
 				allowPolylineExport(false);
@@ -511,7 +511,7 @@ void ccGraphicalSegmentationTool::addPointToPolyline(int x, int y)
 			}
 
 			//we replace last point by the current one
-			CCVector3* lastP = const_cast<CCVector3*>(m_polyVertices->getPointPersistentPtr(vertCount-1));
+			CCVector3* lastP = const_cast<CCVector3*>(m_polyVertices->getPointPersistentPtr(vertCount - 1));
 			*lastP = P;
 			//and add a new (equivalent) one
 			m_polyVertices->addPoint(P);
@@ -526,7 +526,7 @@ void ccGraphicalSegmentationTool::addPointToPolyline(int x, int y)
 		{
 			assert(false); //we shouldn't fall here?!
 			m_state &= (~RUNNING);
-			addPointToPolyline(x,y);
+			addPointToPolyline(x, y);
 			return;
 		}
 	}
@@ -579,7 +579,7 @@ void ccGraphicalSegmentationTool::closePolyLine(int, int)
 	else
 	{
 		//remove last point!
-		m_segmentationPoly->resize(vertCount-1); //can't fail --> smaller
+		m_segmentationPoly->resize(vertCount - 1); //can't fail --> smaller
 		m_segmentationPoly->setClosed(true);
 	}
 
@@ -729,9 +729,9 @@ void ccGraphicalSegmentationTool::doSetPolylineSelection()
 		pauseSegmentationMode(false);
 	}
 
-	m_associatedWin->displayNewMessage(QString(),ccGLWindow::UPPER_CENTER_MESSAGE); //clear the area
-	m_associatedWin->displayNewMessage("Segmentation [ON] (rectangular selection)",ccGLWindow::UPPER_CENTER_MESSAGE,false,3600,ccGLWindow::MANUAL_SEGMENTATION_MESSAGE);
-	m_associatedWin->displayNewMessage("Right click: set opposite corners",ccGLWindow::UPPER_CENTER_MESSAGE,true,3600,ccGLWindow::MANUAL_SEGMENTATION_MESSAGE);
+	m_associatedWin->displayNewMessage(QString(), ccGLWindow::UPPER_CENTER_MESSAGE); //clear the area
+	m_associatedWin->displayNewMessage("Segmentation [ON] (rectangular selection)", ccGLWindow::UPPER_CENTER_MESSAGE, false, 3600, ccGLWindow::MANUAL_SEGMENTATION_MESSAGE);
+	m_associatedWin->displayNewMessage("Right click: set opposite corners", ccGLWindow::UPPER_CENTER_MESSAGE, true, 3600, ccGLWindow::MANUAL_SEGMENTATION_MESSAGE);
 }
 
 void ccGraphicalSegmentationTool::doSetRectangularSelection()
@@ -741,16 +741,16 @@ void ccGraphicalSegmentationTool::doSetRectangularSelection()
 
 	selectionModelButton->setDefaultAction(actionSetRectangularSelection);
 
-	m_rectangularSelection=true;
+	m_rectangularSelection = true;
 	if (m_state != PAUSED)
 	{
 		pauseSegmentationMode(true);
 		pauseSegmentationMode(false);
 	}
 
-	m_associatedWin->displayNewMessage(QString(),ccGLWindow::UPPER_CENTER_MESSAGE); //clear the area
-	m_associatedWin->displayNewMessage("Segmentation [ON] (rectangular selection)",ccGLWindow::UPPER_CENTER_MESSAGE,false,3600,ccGLWindow::MANUAL_SEGMENTATION_MESSAGE);
-	m_associatedWin->displayNewMessage("Right click: set opposite corners",ccGLWindow::UPPER_CENTER_MESSAGE,true,3600,ccGLWindow::MANUAL_SEGMENTATION_MESSAGE);
+	m_associatedWin->displayNewMessage(QString(), ccGLWindow::UPPER_CENTER_MESSAGE); //clear the area
+	m_associatedWin->displayNewMessage("Segmentation [ON] (rectangular selection)", ccGLWindow::UPPER_CENTER_MESSAGE, false, 3600, ccGLWindow::MANUAL_SEGMENTATION_MESSAGE);
+	m_associatedWin->displayNewMessage("Right click: set opposite corners", ccGLWindow::UPPER_CENTER_MESSAGE, true, 3600, ccGLWindow::MANUAL_SEGMENTATION_MESSAGE);
 }
 
 void ccGraphicalSegmentationTool::doActionUseExistingPolyline()
@@ -768,7 +768,7 @@ void ccGraphicalSegmentationTool::doActionUseExistingPolyline()
 		ccHObject::Container polylines;
 		if (root)
 		{
-			root->filterChildren(polylines, true, CC_TYPES::POLY_LINE);
+			root->filterChildren(polylines, true, CC_TYPES::POLY_LINE);//？？？
 		}
 
 		if (!polylines.empty())
@@ -787,11 +787,11 @@ void ccGraphicalSegmentationTool::doActionUseExistingPolyline()
 			if (poly->filterChildren(viewports, false, CC_TYPES::VIEWPORT_2D_OBJECT, true) == 1)
 			{
 				//shall we apply this viewport?
-				if (QMessageBox::question(	m_associatedWin->asWidget(),
-											"Associated viewport",
-											"The selected polyline has an associated viewport: do you want to apply it?",
-											QMessageBox::Yes,
-											QMessageBox::No) == QMessageBox::Yes)
+				if (QMessageBox::question(m_associatedWin->asWidget(),
+					"Associated viewport",
+					"The selected polyline has an associated viewport: do you want to apply it?",
+					QMessageBox::Yes,
+					QMessageBox::No) == QMessageBox::Yes)
 				{
 					m_associatedWin->setViewportParameters(static_cast<cc2DViewportObject*>(viewports.front())->getParameters());
 					m_associatedWin->redraw(false);
@@ -814,8 +814,8 @@ void ccGraphicalSegmentationTool::doActionUseExistingPolyline()
 			allowPolylineExport(false);
 
 			//duplicate polyline 'a minima' (only points and indexes + closed state)
-			if (	m_polyVertices->reserve(vertices->size() + (poly->isClosed() ? 0 : 1))
-				&&	m_segmentationPoly->reserve(poly->size() + (poly->isClosed() ? 0 : 1)))
+			if (m_polyVertices->reserve(vertices->size() + (poly->isClosed() ? 0 : 1))
+				&& m_segmentationPoly->reserve(poly->size() + (poly->isClosed() ? 0 : 1)))
 			{
 				for (unsigned i = 0; i < vertices->size(); ++i)
 				{
@@ -853,7 +853,7 @@ void ccGraphicalSegmentationTool::doActionUseExistingPolyline()
 					m_segmentationPoly->setClosed(true);
 					m_state |= (POLYLINE | RUNNING);
 				}
-				
+
 				m_rectangularSelection = false;
 				m_associatedWin->redraw(true, false);
 			}
@@ -882,8 +882,8 @@ void ccGraphicalSegmentationTool::doExportSegmentationPolyline()
 		messageBox.setText("Export polyline in:\n - 2D (with coordinates relative to the screen)\n - 3D (with coordinates relative to the segmented entities)");
 		QPushButton* button2D = new QPushButton("2D");
 		QPushButton* button3D = new QPushButton("3D");
-		messageBox.addButton(button2D,QMessageBox::AcceptRole);
-		messageBox.addButton(button3D,QMessageBox::AcceptRole);
+		messageBox.addButton(button2D, QMessageBox::AcceptRole);
+		messageBox.addButton(button3D, QMessageBox::AcceptRole);
 		messageBox.addButton(QMessageBox::Cancel);
 		messageBox.setDefaultButton(button3D);
 		messageBox.exec();
@@ -928,7 +928,7 @@ void ccGraphicalSegmentationTool::doExportSegmentationPolyline()
 				mode2D = false;
 			}
 		}
-		
+
 		QString polyName = QString("Segmentation polyline #%1").arg(++s_polylineExportCount);
 		poly->setName(polyName);
 		poly->setEnabled(false); //we don't want it to appear while the segmentation mode is enabled! (anyway it's 2D only...)

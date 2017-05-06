@@ -37,8 +37,8 @@ ReferenceCloud::ReferenceCloud(GenericIndexedCloudPersist* associatedCloud)
 ReferenceCloud::ReferenceCloud(const ReferenceCloud& refCloud)
 	: m_theIndexes(0)
 	, m_globalIterator(0)
-	, m_bbMin(0,0,0)
-	, m_bbMax(0,0,0)
+	, m_bbMin(0, 0, 0)
+	, m_bbMax(0, 0, 0)
 	, m_validBB(false)
 	, m_theAssociatedCloud(refCloud.m_theAssociatedCloud)
 {
@@ -91,7 +91,7 @@ void ReferenceCloud::computeBB()
 	unsigned count = size();
 	if (count == 0)
 	{
-		m_bbMin = m_bbMax = CCVector3(0,0,0);
+		m_bbMin = m_bbMax = CCVector3(0, 0, 0);
 		return;
 	}
 
@@ -99,7 +99,7 @@ void ReferenceCloud::computeBB()
 	const CCVector3* P = getPointPersistentPtr(0);
 	m_bbMin = m_bbMax = *P;
 
-	for (unsigned i=1; i<count; ++i)
+	for (unsigned i = 1; i < count; ++i)
 	{
 		P = getPointPersistentPtr(i);
 		updateBBWithPoint(*P);
@@ -129,15 +129,15 @@ bool ReferenceCloud::resize(unsigned n)
 
 const CCVector3* ReferenceCloud::getCurrentPointCoordinates() const
 {
-	assert(m_theAssociatedCloud && m_globalIterator<size());
-	assert(m_theIndexes->getValue(m_globalIterator)<m_theAssociatedCloud->size());
+	assert(m_theAssociatedCloud && m_globalIterator < size());
+	assert(m_theIndexes->getValue(m_globalIterator) < m_theAssociatedCloud->size());
 	return m_theAssociatedCloud->getPointPersistentPtr(m_theIndexes->getValue(m_globalIterator));
 }
 
 bool ReferenceCloud::addPointIndex(unsigned globalIndex)
 {
 	if (m_theIndexes->capacity() == m_theIndexes->currentSize())
-		if (!m_theIndexes->reserve(m_theIndexes->capacity() + std::min<unsigned>(std::max<unsigned>(1,m_theIndexes->capacity()/2),4096))) //not enough space --> +50% (or 4096)
+		if (!m_theIndexes->reserve(m_theIndexes->capacity() + std::min<unsigned>(std::max<unsigned>(1, m_theIndexes->capacity() / 2), 4096))) //not enough space --> +50% (or 4096)
 			return false;
 
 	m_theIndexes->addElement(globalIndex);
@@ -154,14 +154,14 @@ bool ReferenceCloud::addPointIndex(unsigned firstIndex, unsigned lastIndex)
 		return false;
 	}
 
-	unsigned range = lastIndex-firstIndex; //lastIndex is excluded
-    unsigned pos = size();
+	unsigned range = lastIndex - firstIndex; //lastIndex is excluded
+	unsigned pos = size();
 
-	if (size()<pos+range && !m_theIndexes->resize(pos+range))
+	if (size() < pos + range && !m_theIndexes->resize(pos + range))
 		return false;
-	
-	for (unsigned i=0; i<range; ++i,++firstIndex)
-		m_theIndexes->setValue(pos++,firstIndex);
+
+	for (unsigned i = 0; i < range; ++i, ++firstIndex)
+		m_theIndexes->setValue(pos++, firstIndex);
 
 	invalidateBoundingBox();
 
@@ -171,7 +171,7 @@ bool ReferenceCloud::addPointIndex(unsigned firstIndex, unsigned lastIndex)
 void ReferenceCloud::setPointIndex(unsigned localIndex, unsigned globalIndex)
 {
 	assert(localIndex < size());
-	m_theIndexes->setValue(localIndex,globalIndex);
+	m_theIndexes->setValue(localIndex, globalIndex);
 	invalidateBoundingBox();
 }
 
@@ -180,14 +180,14 @@ void ReferenceCloud::forEach(genericPointAction& action)
 	assert(m_theAssociatedCloud);
 
 	unsigned count = size();
-	for (unsigned i=0; i<count; ++i)
+	for (unsigned i = 0; i < count; ++i)
 	{
 		const unsigned& index = m_theIndexes->getValue(i);
 		ScalarType d = m_theAssociatedCloud->getPointScalarValue(index);
 		ScalarType d2 = d;
-		action(*m_theAssociatedCloud->getPointPersistentPtr(index),d2);
-		if (d!=d2)
-			m_theAssociatedCloud->setPointScalarValue(index,d2);
+		action(*m_theAssociatedCloud->getPointPersistentPtr(index), d2);
+		if (d != d2)
+			m_theAssociatedCloud->setPointScalarValue(index, d2);
 	}
 }
 
@@ -195,9 +195,9 @@ void ReferenceCloud::removePointGlobalIndex(unsigned localIndex)
 {
 	assert(localIndex < size());
 
-	unsigned lastIndex = size()-1;
+	unsigned lastIndex = size() - 1;
 	//swap the value to be removed with the last one
-	m_theIndexes->setValue(localIndex,m_theIndexes->getValue(lastIndex));
+	m_theIndexes->setValue(localIndex, m_theIndexes->getValue(lastIndex));
 	m_theIndexes->setCurrentSize(lastIndex);
 }
 
@@ -222,8 +222,8 @@ bool ReferenceCloud::add(const ReferenceCloud& cloud)
 		return false;
 
 	//copy new indexes (warning: no duplicate check!)
-	for (unsigned i=0; i<newCount; ++i)
-		(*m_theIndexes)[count+i] = (*cloud.m_theIndexes)[i];
+	for (unsigned i = 0; i < newCount; ++i)
+		(*m_theIndexes)[count + i] = (*cloud.m_theIndexes)[i];
 
 	invalidateBoundingBox();
 	return true;

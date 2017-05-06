@@ -29,6 +29,7 @@ namespace CCLib
 /** The polyline is considered as a cloud of points
 	(in a specific order) with a open/closed state
 	information.
+	//! 一个简单的折线类
 **/
 class CC_CORE_LIB_API Polyline : public ReferenceCloud
 {
@@ -38,10 +39,18 @@ class CC_CORE_LIB_API Polyline : public ReferenceCloud
 		explicit Polyline(GenericIndexedCloudPersist* associatedCloud);
 
 		//! Returns whether the polyline is closed or not
-		inline bool isClosed() const { return m_isClosed; }
+		//  折线是否闭合
+		inline bool isClosed() const
+		{ 
+			return m_isClosed; 
+		}
 
 		//! Sets whether the polyline is closed or not
-		inline void setClosed(bool state) { m_isClosed = state; }
+		//! 设置折线是否闭合
+		inline void setClosed(bool state) 
+		{ 
+			m_isClosed = state;
+		}
 
 		//inherited from ReferenceCloud
 		virtual void clear(bool unusedParam = true);

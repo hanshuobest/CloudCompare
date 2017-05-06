@@ -92,6 +92,7 @@ public:
 	virtual ~ccDBRoot();
 
 	//! Returns associated root object
+	//! 返回关联的根对象
 	ccHObject* getRootEntity();
 
 	//! Hides properties view

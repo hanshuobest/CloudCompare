@@ -25,7 +25,7 @@
 class ccGLWindow;
 
 //! Generic overlay dialog interface
-//  
+//! 通用覆盖对话框接口  
 class ccOverlayDialog : public QDialog
 {
 	Q_OBJECT
@@ -41,6 +41,7 @@ public:
 	//! Links the overlay dialog with a MDI window
 	/** Warning: link can't be modified while dialog is displayed/process is running!
 		\return success
+		将叠加对话框与MDI窗口相连接
 	**/
 	virtual bool linkWith(ccGLWindow* win);
 
@@ -64,7 +65,10 @@ public:
 	void addOverridenShortcut(Qt::Key key);
 
 	//! Returns whether the tool is currently started or not
-	bool started() const { return m_processing; }
+	bool started() const 
+	{ 
+		return m_processing; 
+	}
 
 signals:
 

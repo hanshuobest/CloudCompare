@@ -60,11 +60,12 @@ bool ccOverlayDialog::linkWith(ccGLWindow* win)
 	if (m_associatedWin)
 	{
 		//we automatically detach the former dialog
+		//自动分离以前的对话框
 		{
 			QWidgetList topWidgets = QApplication::topLevelWidgets();
 			foreach(QWidget* widget, topWidgets)
 			{
-				widget->removeEventFilter(this);
+				widget->removeEventFilter(this);//移除已存在的过滤器
 			}
 		}
 		m_associatedWin->disconnect(this);
@@ -148,7 +149,7 @@ bool ccOverlayDialog::eventFilter(QObject *obj, QEvent *e)
 	}
 	else
 	{
-		if (e->type() == QEvent::Show)
+		if (e->type() == QEvent::Show)//部件显示
 		{
 			emit shown();
 		}

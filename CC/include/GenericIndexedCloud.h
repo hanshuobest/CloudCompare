@@ -27,6 +27,7 @@ namespace CCLib
 
 //! A generic 3D point cloud with index-based point access
 /** Implements the GenericCloud interface.
+	基于索引访问的通用3D点云类，实现GenericCloud的接口，也是抽象类
 **/
 class CC_CORE_LIB_API GenericIndexedCloud : virtual public GenericCloud
 {
@@ -47,6 +48,7 @@ public:
 		GenericIndexedCloudPersist class.
 		\param index of the requested point (between 0 and the cloud size minus 1)
 		\return the requested point (undefined behavior if index is invalid)
+		获取指定索引的三维点，纯虚函数
 	**/
 	virtual const CCVector3* getPoint(unsigned index) = 0;
 

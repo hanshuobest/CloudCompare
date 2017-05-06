@@ -445,6 +445,7 @@ protected slots:
 	void deactivateSegmentationMode(bool);
 
 	//Polyline tracing
+	//¶àÏß×·×Ù
 	void activateTracePolylineMode();
 	void deactivateTracePolylineMode(bool);
 

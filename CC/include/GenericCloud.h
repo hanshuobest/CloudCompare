@@ -27,6 +27,7 @@ namespace CCLib
 {
 
 //! A generic 3D point cloud interface for data communication between library and client applications
+//! 一种通用的3D点云接口，用于库和客户端应用之间的数据通信，所有点云类的基类，抽象类
 class CC_CORE_LIB_API GenericCloud
 {
 
@@ -39,17 +40,20 @@ public:
 	virtual ~GenericCloud() {}
 
 	//! Generic function applied to a point (used by foreach)
+	//! 应用于点的通用函数
 	typedef void genericPointAction(const CCVector3&, ScalarType&);
 
 	//! Returns the number of points
 	/**	Virtual method to request the cloud size
 		\return the cloud size
+		虚函数，返回点的数量
 	**/
 	virtual unsigned size() const = 0;
 
 	//! Fast iteration mechanism
 	/**	Virtual method to apply a function to the whole cloud
 		\param action the function to apply (see GenericCloud::genericPointAction)
+		快速迭代机制
 	**/
 	virtual void forEach(genericPointAction& action) = 0;
 
@@ -57,6 +61,7 @@ public:
 	/**	Virtual method to request the cloud bounding box limits
 		\param bbMin lower bounding-box limits (Xmin,Ymin,Zmin)
 		\param bbMax higher bounding-box limits (Xmax,Ymax,Zmax)
+		返回点云的包围盒
 	**/
 	virtual void getBoundingBox(CCVector3& bbMin, CCVector3& bbMax) = 0;
 
@@ -69,6 +74,7 @@ public:
 		to this point will be this visibility value.
 		\param P the 3D point to test
 		\return visibility (default: POINT_VISIBLE)
+		返回给定点的可见性状态
 	**/
 	virtual inline unsigned char testVisibility(const CCVector3& P) const 
 	{ 
@@ -77,6 +83,7 @@ public:
 
 	//! Sets the cloud iterator at the beginning
 	/**	Virtual method to handle the cloud global iterator
+	 ** 设置点云迭代器在开头
 	**/
 	virtual void placeIteratorAtBegining() = 0;
 
@@ -90,6 +97,7 @@ public:
 		(see the DgmOctree::executeFunctionForAllCellsAtLevel_MT and
 		DgmOctree::executeFunctionForAllCellsAtStartingLevel_MT methods).
 		\return pointer on next point (or 0 if no more)
+		返回下一个点云指针
 	**/
 	virtual const CCVector3* getNextPoint() = 0;
 
@@ -98,13 +106,16 @@ public:
 		this method gives the signal for its creation. Otherwise, if possible
 		the structure size should be pre-reserved with the same number of
 		elements as the point cloud.
+		启用与点云相关联的标量字段
 	**/
 	virtual bool enableScalarField() = 0;
 
 	//! Returns true if the scalar field is enabled, false otherwise
+	//  如果标量字段可用返回真，否则返回假
 	virtual bool isScalarFieldEnabled() const = 0;
 
 	//! Sets the ith point associated scalar value
+	//! 设置与第i个点相关的标量值
 	virtual void setPointScalarValue(unsigned pointIndex, ScalarType value) = 0;
 
 	//! Returns the ith point associated scalar value
