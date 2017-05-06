@@ -65,6 +65,7 @@ public:
 	/** \param P a 2D point
 		\param polyVertices polygon vertices (considered as ordered 2D poyline vertices)
 		\return true if P is inside poly
+		 测试点是否在多边形内
 	**/
 	static bool isPointInsidePoly(const CCVector2& P, const GenericIndexedCloud* polyVertices);
 

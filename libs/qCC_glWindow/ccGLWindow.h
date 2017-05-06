@@ -193,6 +193,8 @@ public:
 	inline virtual QWidget* asWidget() override { return this; }
 #endif
 	inline virtual QSize getScreenSize() const override { return size(); }
+
+	// 获取相机参数，返回结果保存在params中
 	virtual void getGLCameraParameters(ccGLCameraParameters& params) override;
 
 	//! Displays a status message in the bottom-left corner

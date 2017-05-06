@@ -28,6 +28,7 @@ class ccPointCloud;
 
 //! Colored polyline
 /** Extends the CCLib::Polyline class
+  * 带颜色的多线类
 **/
 class QCC_DB_LIB_API ccPolyline : public CCLib::Polyline, public ccShiftedObject
 {
