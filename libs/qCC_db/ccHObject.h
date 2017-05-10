@@ -179,6 +179,7 @@ public: //children management
 	void detatchAllChildren();
 
 	void removeChild(ccHObject* child);
+
 	//! Removes a specific child given its index
 	/** \warning This method may delete the child if the DP_PARENT_OF_OTHER
 		dependency flag is set for this child (use detachChild if you

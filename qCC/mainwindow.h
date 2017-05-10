@@ -85,6 +85,7 @@ protected:
 public:
 
 	//! Returns the unique instance of this object
+	//! 返回此对象的唯一实例
 	static MainWindow* TheInstance();
 
 	//! Static shortcut to MainWindow::getActiveGLWindow

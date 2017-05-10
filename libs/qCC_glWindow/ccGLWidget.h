@@ -115,6 +115,7 @@ static void CreateGLWindow(ccGLWindow*& window, QWidget*& widget, bool stereoMod
 #endif
 }
 
+// 将QWidget强制转为自定义的GLWidget
 static ccGLWindow* GLWindowFromWidget(QWidget* widget)
 {
 #ifdef CC_GL_WINDOW_USE_QWINDOW

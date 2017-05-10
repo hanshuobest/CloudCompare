@@ -1277,6 +1277,7 @@ protected: //members
 	bool m_alwaysUseFBO;
 
 	//! Whether FBO should be updated (or simply displayed as a texture = faster!)
+	//! 是否帧更新帧缓存对象
 	bool m_updateFBO;
 
 	// Color ramp shader

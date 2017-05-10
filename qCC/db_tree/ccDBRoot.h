@@ -299,6 +299,7 @@ protected:
 	QAction* m_enableBubbleViewMode;
 
 	//! Last context menu pos
+	//! 最后上下文菜单位置
 	QPoint m_contextMenuPos;
 
 };
