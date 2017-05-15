@@ -1174,8 +1174,11 @@ protected: //members
 	bool m_LODEnabled;
 	//! Whether L.O.D. should be automatically disabled at the end of the rendering cycle
 	bool m_LODAutoDisable;
+
 	//! Whether the display should be refreshed on next call to 'refresh'
+	//! 下一次刷新时是否刷新显示器
 	bool m_shouldBeRefreshed;
+
 	//! Whether the mouse (cursor) has moved after being pressed or not
 	bool m_mouseMoved;
 	//! Whether the mouse is currently pressed or not
@@ -1277,6 +1280,7 @@ protected: //members
 	bool m_alwaysUseFBO;
 
 	//! Whether FBO should be updated (or simply displayed as a texture = faster!)
+	//! 是否帧更新帧缓存对象
 	bool m_updateFBO;
 
 	// Color ramp shader

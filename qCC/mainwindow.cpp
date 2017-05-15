@@ -9785,15 +9785,20 @@ void MainWindow::setActiveSubWindow(QWidget *window)
 void MainWindow::redrawAll(bool only2D/*=false*/)
 {
 	QList<QMdiSubWindow*> windows = m_mdiArea->subWindowList();
-	for (int i=0; i<windows.size(); ++i)
+	for (int i = 0; i < windows.size(); ++i)
+	{
 		GLWindowFromWidget(windows.at(i)->widget())->redraw(only2D);
+	}		
 }
 
 void MainWindow::refreshAll(bool only2D/*=false*/)
 {
 	QList<QMdiSubWindow*> windows = m_mdiArea->subWindowList();
 	for (int i = 0; i < windows.size(); ++i)
+	{
 		GLWindowFromWidget(windows.at(i)->widget())->refresh(only2D);
+	}
+		
 }
 
 void MainWindow::updateUI()

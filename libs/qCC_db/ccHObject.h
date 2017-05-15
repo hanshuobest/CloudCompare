@@ -33,6 +33,7 @@ public: //construction
 	/** \param name object name (optional)
 	**/
 	ccHObject(QString name = QString());
+
 	//! Copy constructor
 	ccHObject(const ccHObject& object);
 
@@ -60,12 +61,18 @@ public: //base members access
 	//! Returns class ID
 	/** \return class unique ID
 	**/
-	inline virtual CC_CLASS_ENUM getClassID() const override { return CC_TYPES::HIERARCHY_OBJECT; }
+	inline virtual CC_CLASS_ENUM getClassID() const override 
+	{ 
+		return CC_TYPES::HIERARCHY_OBJECT; 
+	}
 
 	//! Returns parent object
 	/** \return parent object (NULL if no parent)
 	**/
-	inline ccHObject* getParent() const { return m_parent; }
+	inline ccHObject* getParent() const 
+	{ 
+		return m_parent;
+	}
 
 	//! Returns the icon associated to this entity
 	/** ccDBRoot will call this method: if an invalid icon is returned
@@ -179,6 +186,7 @@ public: //children management
 	void detatchAllChildren();
 
 	void removeChild(ccHObject* child);
+
 	//! Removes a specific child given its index
 	/** \warning This method may delete the child if the DP_PARENT_OF_OTHER
 		dependency flag is set for this child (use detachChild if you
@@ -187,7 +195,9 @@ public: //children management
 	void removeChild(int pos);
 	//! Removes all children
 	void removeAllChildren();
+
 	//! Returns child index
+	//! 获取孩子索引
 	int getChildIndex(const ccHObject* aChild) const;
 	//! Swaps two children
 	void swapChildren(unsigned firstChildIndex, unsigned secondChildIndex);

@@ -96,8 +96,10 @@ public:
 	ccHObject* getRootEntity();
 
 	//! Hides properties view
+	//! 隐藏属性视图
 	void hidePropertiesView();
 	//! Updates properties view
+	//! 更新属性视图
 	void updatePropertiesView();
 
 	//! Adds an element to the DB tree
@@ -105,6 +107,7 @@ public:
 
 	//! Removes an element from the DB tree
 	/** Automatically calls prepareDisplayForRefresh on the object.
+	 ** 从DB tree中移除一个元素
 	**/
 	void removeElement(ccHObject* object);
 
@@ -112,6 +115,7 @@ public:
 	/** Faster than multiple calls to removeElement.
 		Automatically calls prepareDisplayForRefresh on the objects.
 		\warning The input container will be cleared.
+		移除多个元素
 	**/
 	void removeElements(ccHObject::Container& objects);
 
@@ -119,6 +123,7 @@ public:
 	ccHObject* find(int uniqueID) const;
 
 	//! Returns the number of selected entities in DB tree (optionally with a given type)
+	//! 返回DB树中所选实体的数量
 	int countSelectedEntities(CC_CLASS_ENUM filter = CC_TYPES::OBJECT);
 
 	//! Returns selected entities in DB tree (optionally with a given type and additional information)
@@ -256,6 +261,7 @@ protected:
 
 	//! Selected entity's properties data model
 	QStandardItemModel* m_propertiesModel;
+
 	//! Selected entity's properties delegate
 	ccPropertiesTreeDelegate* m_ccPropDelegate;
 
@@ -299,6 +305,7 @@ protected:
 	QAction* m_enableBubbleViewMode;
 
 	//! Last context menu pos
+	//! 最后上下文菜单位置
 	QPoint m_contextMenuPos;
 
 };

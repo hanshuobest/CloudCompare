@@ -212,8 +212,12 @@ public:
 
 	//! Returns whether the object is enabled or not
 	/** Shortcut to access flag CC_ENABLED
+	 ** 返回是否这个对象可用
 	**/
-	virtual inline bool isEnabled() const { return getFlagState(CC_ENABLED); }
+	virtual inline bool isEnabled() const 
+	{ 
+		return getFlagState(CC_ENABLED); 
+	}
 
 	//! Sets the "enabled" property
 	/** Shortcut to modify flag CC_ENABLED
