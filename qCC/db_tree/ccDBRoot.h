@@ -150,6 +150,8 @@ public:
 	virtual QModelIndex parent(const QModelIndex &index) const override;
 	virtual int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 	virtual int columnCount(const QModelIndex &parent = QModelIndex()) const override;
+
+	// 得到该如何对一个项进行相关的操作（例如是否可以编辑）
 	virtual Qt::ItemFlags flags(const QModelIndex &index) const override;
 	virtual bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override;
 	virtual Qt::DropActions supportedDropActions() const override;
@@ -161,7 +163,10 @@ public slots:
 	void changeSelection(const QItemSelection & selected, const QItemSelection & deselected);
 	void reflectObjectPropChange(ccHObject* obj);
 	void redrawCCObject(ccHObject* object);
+
+	// 重绘对象和它的孩子
 	void redrawCCObjectAndChildren(ccHObject* object);
+
 	void updateCCObject(ccHObject* object);
 	void deleteSelectedEntities();
 

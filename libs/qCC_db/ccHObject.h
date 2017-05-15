@@ -68,6 +68,7 @@ public: //base members access
 
 	//! Returns parent object
 	/** \return parent object (NULL if no parent)
+	 ** ·µ»Ø¸¸¶ÔÏó
 	**/
 	inline ccHObject* getParent() const 
 	{ 

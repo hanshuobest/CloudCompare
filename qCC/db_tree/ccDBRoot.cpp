@@ -456,7 +456,7 @@ QVariant ccDBRoot::data(const QModelIndex &index, int role) const
 
 	if (role == Qt::DisplayRole)
 	{
-		QString baseName(item->getName());
+		QString baseName(item->getName()); // 对象名字
 		if (baseName.isEmpty())
 			baseName = QStringLiteral("no name");
 		//specific case
@@ -471,7 +471,7 @@ QVariant ccDBRoot::data(const QModelIndex &index, int role) const
 	{
 		return QVariant(item->getName());
 	}
-	else if (role == Qt::DecorationRole)
+	else if (role == Qt::DecorationRole) //以图标的形式呈现修饰数据
 	{
 		// does the object have an "embedded icon"? - It may be the case for ccHObject defined in plugins
 		QIcon icon = item->getIcon();
@@ -557,7 +557,7 @@ QVariant ccDBRoot::data(const QModelIndex &index, int role) const
 				return QVariant();
 		}
 	}
-	else if (role == Qt::CheckStateRole)
+	else if (role == Qt::CheckStateRole)//项目的检索状态
 	{
 		if (item->isEnabled())
 			return Qt::Checked;
@@ -604,7 +604,7 @@ bool ccDBRoot::setData(const QModelIndex &index, const QVariant &value, int role
 			if (item)
 			{
 				if (value == Qt::Checked)
-					item->setEnabled(true);
+					item->setEnabled(true);//设置可用
 				else
 					item->setEnabled(false);
 
@@ -650,7 +650,7 @@ QModelIndex ccDBRoot::index(ccHObject* object)
 		return QModelIndex();
 	}
 
-	int pos = parent->getChildIndex(object);
+	int pos = parent->getChildIndex(object);//孩子的索引位置
 	assert(pos >= 0);
 
 	return createIndex(pos, 0, object);
@@ -1066,7 +1066,7 @@ Qt::ItemFlags ccDBRoot::flags(const QModelIndex &index) const
 	if (!index.isValid())
 		return 0;
 
-	Qt::ItemFlags defaultFlags = QAbstractItemModel::flags(index);
+	Qt::ItemFlags defaultFlags = QAbstractItemModel::flags(index); //默认是ItemIsSelectable|Qt::ItemIsEnabled
 
 	//common flags
 	defaultFlags |= (Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable);

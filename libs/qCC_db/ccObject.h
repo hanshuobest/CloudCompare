@@ -187,6 +187,7 @@ public:
 
 	//! Returns current database version
 	static unsigned GetCurrentDBVersion();
+
 	//! Sets the unique ID generator
 	static void SetUniqueIDGenerator(ccUniqueIDGenerator::Shared generator);
 	//! Returns the unique ID generator
@@ -221,6 +222,7 @@ public:
 
 	//! Sets the "enabled" property
 	/** Shortcut to modify flag CC_ENABLED
+	 ** 设置可用属性
 	**/
 	virtual inline void setEnabled(bool state) { setFlagState(CC_ENABLED,state); }
 
@@ -238,7 +240,11 @@ public:
 	virtual inline void setLocked(bool state) { setFlagState(CC_LOCKED,state); }
 
 	//shortcuts
-	inline bool isGroup() const { return (getClassID() & CC_GROUP_BIT) != 0; }
+	inline bool isGroup() const
+	{ 
+		return (getClassID() & CC_GROUP_BIT) != 0;
+	}
+
 	inline bool isLeaf() const {return (getClassID() & CC_LEAF_BIT) != 0; }
 	inline bool isCustom() const {return (getClassID() & CC_CUSTOM_BIT) != 0; }
 	inline bool isHierarchy() const { return (getClassID() & CC_HIERARCH_BIT) != 0; }
