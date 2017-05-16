@@ -38,7 +38,7 @@ struct ccClipPlane
 };
 typedef std::vector<ccClipPlane> ccClipPlaneSet;
 
-//! Generic interface for (3D) drawable entities
+
 class QCC_DB_LIB_API ccDrawableObject
 {
 public:
@@ -84,6 +84,7 @@ public:  //drawing and drawing options
 	//! Locks/unlocks visibilty
 	/** If visibility is locked, the user won't be able to modify it
 		(via the properties tree for instance).
+		当锁定它之后用户就不能修改它了，默认是不锁定
 	**/
 	inline virtual void lockVisibility(bool state)
 	{ 
@@ -116,10 +117,9 @@ public:  //drawing and drawing options
 	//! 返回是否显示颜色
 	inline virtual bool colorsShown() const { return m_colorsDisplayed; }
 
-	//! Sets colors visibility
+	//! 设置颜色可见，默认不显示
 	inline virtual void showColors(bool state) { m_colorsDisplayed = state; }
 	
-	//! Toggles colors display state
 	//! 触发颜色显示状态
 	inline virtual void toggleColors() 
 	{ 
@@ -127,6 +127,7 @@ public:  //drawing and drawing options
 	}
 
 	//! Returns whether normals are enabled or not
+	//! 是否法线可用
 	inline virtual bool hasNormals() const  { return false; }
 	//! Returns whether normals are shown or not
 	inline virtual bool normalsShown() const { return m_normalsDisplayed; }
@@ -166,6 +167,7 @@ public: //Name display in 3D
 	inline virtual void showNameIn3D(bool state) { m_showNameIn3D = state; }
 
 	//! Returns whether name is displayed in 3D or not
+	//! 名字是否显示在三维中
 	inline virtual bool nameShownIn3D() const { return m_showNameIn3D; }
 
 	//! Toggles name in 3D display state

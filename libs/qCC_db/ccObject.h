@@ -200,6 +200,7 @@ public:
 	virtual inline QString getName() const { return m_name; }
 
 	//! Sets object name
+	//! 设置对象的名字
 	virtual inline void setName(const QString& name) { m_name = name; }
 
 	//! Returns object unique ID
@@ -318,6 +319,7 @@ protected:
 	//! Sets flag state
 	/** \param flag object flag to set
 		\param state flag state
+		设置标记状态
 	**/
 	virtual void setFlagState(CC_OBJECT_FLAG flag, bool state);
 

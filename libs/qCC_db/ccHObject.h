@@ -141,8 +141,12 @@ public: //children management
 	//! Returns the ith child
 	/** \param childPos child position
 		\return child object (or NULL if wrong position)
+		返回第几个孩子
 	**/
-	inline ccHObject* getChild(unsigned childPos) const { return (childPos < getChildrenNumber() ? m_children[childPos] : 0); }
+	inline ccHObject* getChild(unsigned childPos) const
+	{
+		return (childPos < getChildrenNumber() ? m_children[childPos] : 0);
+	}
 
 	//! Finds an entity in this object hierarchy
 	/** \param uniqueID child unique ID
@@ -165,7 +169,7 @@ public: //children management
 		\param filter pattern for children selection
 		\param strict whether the search is strict on the type (i.e 'isA') or not (i.e. 'isKindOf')
 		\param inDisplay [optional] display in which the children are displayed
-		\return number of collected children
+		\return number of collected children返回搜集孩子数量
 	**/
 	unsigned filterChildren(Container& filteredChildren,
 							bool recursive = false,
