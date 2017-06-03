@@ -204,9 +204,12 @@ public: //children management
 	//! Returns child index
 	//! 获取孩子索引
 	int getChildIndex(const ccHObject* aChild) const;
+
 	//! Swaps two children
 	void swapChildren(unsigned firstChildIndex, unsigned secondChildIndex);
+
 	//! Returns index relatively to its parent or -1 if no parent
+	//! 返回相对于父对象的索引，如果没有父对象返回-1
 	int getIndex() const;
 
 	//! Transfer a given child to another parent

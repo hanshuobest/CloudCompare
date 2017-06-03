@@ -103,6 +103,7 @@ public:
 	void updatePropertiesView();
 
 	//! Adds an element to the DB tree
+	//! 增加一个元素到DB树中
 	void addElement(ccHObject* object, bool autoExpand = true);
 
 	//! Removes an element from the DB tree
@@ -141,6 +142,7 @@ public:
 	void unselectAllEntities();
 
 	//! Unloads all entities
+	//! 卸载所有项目
 	void unloadAll();
 
 	//inherited from QAbstractItemModel

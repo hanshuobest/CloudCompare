@@ -467,7 +467,7 @@ void ccGraphicalSegmentationTool::addPointToPolyline(int x, int y)
 
 	//new point
 	QPointF pos2D = m_associatedWin->toCenteredGLCoordinates(x, y);
-	CCVector3 P(static_cast<PointCoordinateType>(pos2D.x()),static_cast<PointCoordinateType>(pos2D.y()),0);
+	CCVector3 P(static_cast<PointCoordinateType>(pos2D.x()), static_cast<PointCoordinateType>(pos2D.y()), 0);
 
 	//CTRL key pressed at the same time?
 	bool ctrlKeyPressed = m_rectangularSelection || ((QApplication::keyboardModifiers() & Qt::ControlModifier) == Qt::ControlModifier);

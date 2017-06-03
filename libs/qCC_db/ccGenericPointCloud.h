@@ -47,6 +47,7 @@ class ccOctreeProxy;
 	- normals (compressed)
 	- an octree strucutre
 	- visibility information per point (to hide/display subsets of points)
+	相关特征的3D点云接口
 **/
 class QCC_DB_LIB_API ccGenericPointCloud : public ccShiftedObject,  virtual public CCLib::GenericIndexedCloudPersist
 {
@@ -71,6 +72,7 @@ public:
 	//! Clones this entity
 	/** All the main features of the entity are cloned, except from the octree and
 		the points visibility information.
+		所有实体的主要功能都被复制，除了八叉树和可见性信息
 		\param destCloud destination cloud can be provided here (must be of the exact same type as the cloned cloud!)
 		\param ignoreChildren [optional] whether to ignore the cloud's children or not (in which case they will be cloned as well)
 		\return a copy of this entity

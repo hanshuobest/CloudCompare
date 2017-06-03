@@ -123,6 +123,7 @@ protected:
 	void allowPolylineExport(bool state);
 
 	//! Set of entities to be segmented
+	//! 被分割的实体集
 	QSet<ccHObject*> m_toSegment;
 
 	//! Whether something has changed or not (for proper 'cancel')

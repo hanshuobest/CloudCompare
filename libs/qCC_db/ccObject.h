@@ -204,6 +204,7 @@ public:
 	virtual inline void setName(const QString& name) { m_name = name; }
 
 	//! Returns object unique ID
+	//! 返回对象唯一的ID
 	virtual inline unsigned getUniqueID() const { return m_uniqueID; }
 
 	//! Changes unique ID
@@ -263,6 +264,7 @@ public:
 	/** Unique IDs are handled with persistent settings
 		in order to assure consistency between main app
 		and plugins!
+		返回一个新的未分配的ID
 	**/
 	static unsigned GetNextUniqueID();
 

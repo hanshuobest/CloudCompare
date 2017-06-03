@@ -342,6 +342,7 @@ bool ccHObject::addChild(ccHObject* child, int dependencyFlags/*=DP_PARENT_OF_OT
 	}
 
 	//we want to be notified whenever this child is deleted!
+	//孩子删除时收到通知
 	child->addDependency(this, DP_NOTIFY_OTHER_ON_DELETE); //DGM: potentially redundant with calls to 'addDependency' but we can't miss that ;)
 
 	if (dependencyFlags != 0)
