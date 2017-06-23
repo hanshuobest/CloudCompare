@@ -33,6 +33,7 @@
 class QWidget;
 
 //! Standard parameters for GL displays/viewports
+//! 用于GL显示和视点的标准参数类
 class QCC_DB_LIB_API ccViewportParameters : public ccSerializableObject
 {
 public:
@@ -69,7 +70,8 @@ public:
 	bool perspectiveView;
 	//! Whether view is centered on displayed scene (true) or on the user eye (false)
 	/** Always true for ortho. mode.
-	**/
+	 ** 视点是否在现实场景的中心
+	 **/
 	bool objectCenteredView;
 
 	//! Theoretical perspective 'zNear' relative position

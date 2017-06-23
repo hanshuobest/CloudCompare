@@ -47,7 +47,7 @@ public:
 					GLenum type = GL_UNSIGNED_BYTE,
 					GLint minMagFilter = GL_NEAREST,
 					GLenum target = GL_TEXTURE_2D);
-
+	// 是否关联颜色
 	bool attachColor(	GLuint texID,
 						bool ownTexture = false,
 						GLenum target = GL_TEXTURE_2D);
@@ -73,6 +73,7 @@ public:
 protected: //methods
 
 	//! Deletes/releases the color texture
+	//! 释放删除颜色纹理
 	void deleteColorTexture();
 
 	//! Deletes/releases the depth texture
@@ -81,6 +82,7 @@ protected: //methods
 protected: //members
 
 	//! FBO validity
+	//! FBO是否有效
 	bool m_isValid;
 
 	//! Width
@@ -92,12 +94,14 @@ protected: //members
 	GLuint m_depthTexture;
 
 	//! Whether the depth texture is owned by this FBO or not
+	//! 是否深度纹理属于FBO
 	bool m_ownDepthTexture;
 
 	//! Color texture GL ID
 	GLuint m_colorTexture;
 
 	//! Whether the color texture is owned by this FBO or not
+	//! 颜色纹理是否属于帧缓冲对象
 	bool m_ownColorTexture;
 
 	//! ID帧缓存对象名称

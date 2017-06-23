@@ -217,6 +217,6 @@ struct ccGLDrawContext
 		return qGLContext ? qGLContext->versionFunctions<TYPE>() : 0;
 	}   
 };
-typedef ccGLDrawContext CC_DRAW_CONTEXT;
+typedef ccGLDrawContext CC_DRAW_CONTEXT;//显示上下文
 
 #endif //CC_GL_DRAW_CONTEXT_HEADER

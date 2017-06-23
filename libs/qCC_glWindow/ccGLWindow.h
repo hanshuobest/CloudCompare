@@ -83,6 +83,7 @@ public:
 	};
 
 	//! Interaction flags (mostly with the mouse)
+	//! 鼠标交互标记
 	enum INTERACTION_FLAG 
 	{
 
@@ -378,6 +379,7 @@ public:
 	virtual void setUnclosable(bool state);
 
 	//! Returns context information
+	//! 获得上下文信息
 	virtual void getContext(CC_DRAW_CONTEXT& context);
 
 	//! Minimum point size
@@ -807,6 +809,7 @@ protected: //rendering
 	void makeCurrent();
 
 	//! Binds an FBO or releases the current one (if input is NULL)
+	//! 绑定一个帧缓冲对象或当输入为空时释放当前
 	/** This method must be called instead of the FBO's own 'start' and 'stop' methods
 		so as to properly handle the interactions with QOpenGLWidget's own FBO.
 	**/
@@ -840,6 +843,7 @@ protected: //rendering
 	};
 
 	//! Rendering params
+	//! 渲染参数结构体
 	struct RenderingParams
 	{
 		RenderingParams()
@@ -1240,7 +1244,9 @@ protected: //members
 	/** Relative to object.
 	**/
 	float m_customLightPos[4];
+
 	//! Whether custom light is enabled or not
+	//! 是否启用自定义光
 	bool m_customLightEnabled;
 
 	//! Clickable item
@@ -1260,12 +1266,15 @@ protected: //members
 		ClickableItem(Role _role, QRect _area) : role(_role), area(_area) {}
 	};
 	//! Currently displayed clickable items
+	//! 当前可显示的点击项目
 	std::vector<ClickableItem> m_clickableItems;
 
 	//! Whether clickable items are visible (= mouse over) or not
+	//! 是否单击的项目可见
 	bool m_clickableItemsVisible;
 
 	//! Currently active shader
+	//! 当前激活的着色器
 	ccShader* m_activeShader;
 	//! Whether shaders are enabled or not
 	bool m_shadersEnabled;
@@ -1303,15 +1312,19 @@ protected: //members
 	QFont m_font;
 
 	//! Pivot symbol visibility
+	//! 轴符号的可见性
 	PivotVisibility m_pivotVisibility;
 
 	//! Whether pivot symbol should be shown or not
+	//! 轴符号是否可见
 	bool m_pivotSymbolShown;
 
 	//! Whether rectangular picking is allowed or not
+	//! 是否允许矩形选择
 	bool m_allowRectangularEntityPicking;
 
 	//! Rectangular picking polyline
+	//! 矩形选择多线
 	ccPolyline* m_rectPickingPoly;
 
 	//! Overridden display parameter 
@@ -1389,9 +1402,11 @@ protected: //members
 	QOpenGLExtension_ARB_framebuffer_object	m_glExtFunc;
 
 	//! Whether FBO support is on
+	//! 是否支持FBO
 	bool m_glExtFuncSupported;
 
 	//! Auto-refresh mode
+	//! 自动刷新模式
 	bool m_autoRefresh;
 	//! Auto-refresh timer
 	QTimer m_autoRefreshTimer;
@@ -1400,17 +1415,21 @@ protected: //members
 	HotZone* m_hotZone;
 
 	//! Whether to display the coordinates of the point below the cursor position
+	//! 是否在光标的下方显示坐标
 	bool m_showCursorCoordinates;
 
 	//! Whether the pivot point is automatically picked at the center of the screen (when possible)
+	//! 是否在屏幕中心自动选择枢轴点
 	bool m_autoPickPivotAtCenter;
 
 	//! Candidate pivot point (will be used when the mouse is released)
+	//! 候选轴点
 	CCVector3d m_autoPivotCandidate;
 
 private:
 
 	//! Returns shaders path
+	//！返回着色器路径
 	static QString getShadersPath();
 };
 

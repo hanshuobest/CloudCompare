@@ -124,7 +124,7 @@ void ccFrameBufferObject::deleteDepthTexture()
 {
 	if (m_isValid && m_ownDepthTexture && m_glFunc.glIsTexture(m_depthTexture))
 	{
-		m_glFunc.glDeleteTextures(1, &m_depthTexture);
+		m_glFunc.glDeleteTextures(1, &m_depthTexture);//删除命名的纹理
 	}
 	m_depthTexture = 0;
 	m_ownDepthTexture = false;
@@ -144,7 +144,7 @@ bool ccFrameBufferObject::initColor(GLint internalformat/*=GL_RGBA*/,
 
 	//create the new texture
 	m_glFunc.glPushAttrib(GL_ENABLE_BIT);//压人属性堆栈
-	m_glFunc.glEnable(GL_TEXTURE_2D);
+	m_glFunc.glEnable(GL_TEXTURE_2D);//启用二维纹理
 
 	GLuint texID = 0;
 	m_glFunc.glGenTextures(1, &texID);
@@ -153,7 +153,7 @@ bool ccFrameBufferObject::initColor(GLint internalformat/*=GL_RGBA*/,
 	m_glFunc.glTexParameteri(target, GL_TEXTURE_MIN_FILTER, minMagFilter);
 	m_glFunc.glTexParameteri(target, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	m_glFunc.glTexParameteri(target, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	m_glFunc.glTexImage2D(target, 0, internalformat, m_width, m_height, 0, format, type, 0);
+	m_glFunc.glTexImage2D(target, 0, internalformat, m_width, m_height, 0, format, type, 0);//载入一个二维纹理
 	m_glFunc.glBindTexture(target, 0);
 
 	m_glFunc.glPopAttrib();
@@ -179,7 +179,7 @@ bool ccFrameBufferObject::attachColor(	GLuint texID,
 		return false;
 	}
 
-	if (!m_glFunc.glIsTexture(texID))
+	if (!m_glFunc.glIsTexture(texID))//判断ID是否 已经对应一个纹理
 	{
 		//error or simple warning?
 		assert(false);
@@ -199,7 +199,7 @@ bool ccFrameBufferObject::attachColor(	GLuint texID,
 	bool success = true;
 	switch (status)
 	{
-	case GL_FRAMEBUFFER_COMPLETE_EXT:
+	case GL_FRAMEBUFFER_COMPLETE_EXT://FBO已经准备好
 		//remove the previous texture (if any)
 		deleteColorTexture();
 		//save the new one
@@ -245,7 +245,7 @@ bool ccFrameBufferObject::initDepth(GLint wrapParam/*=GL_CLAMP_TO_BORDER*/,
 	m_glFunc.glTexParameteri(target, GL_TEXTURE_COMPARE_MODE, GL_NONE);
 	m_glFunc.glTexParameteri(target, GL_TEXTURE_MIN_FILTER, minMagFilter);
 	m_glFunc.glTexParameteri(target, GL_TEXTURE_MAG_FILTER, minMagFilter);
-	m_glFunc.glTexImage2D   (target, 0, internalFormat, m_width, m_height, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, 0);
+	m_glFunc.glTexImage2D   (target, 0, internalFormat, m_width, m_height, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, 0);//载入一个二维纹理
 	m_glFunc.glBindTexture  (target, 0);
 
 	m_glFunc.glPopAttrib();
