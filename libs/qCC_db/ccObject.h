@@ -187,6 +187,7 @@ public:
 
 	//! Returns current database version
 	static unsigned GetCurrentDBVersion();
+
 	//! Sets the unique ID generator
 	static void SetUniqueIDGenerator(ccUniqueIDGenerator::Shared generator);
 	//! Returns the unique ID generator
@@ -199,9 +200,11 @@ public:
 	virtual inline QString getName() const { return m_name; }
 
 	//! Sets object name
+	//! 设置对象的名字
 	virtual inline void setName(const QString& name) { m_name = name; }
 
 	//! Returns object unique ID
+	//! 返回对象唯一的ID
 	virtual inline unsigned getUniqueID() const { return m_uniqueID; }
 
 	//! Changes unique ID
@@ -212,11 +215,16 @@ public:
 
 	//! Returns whether the object is enabled or not
 	/** Shortcut to access flag CC_ENABLED
+	 ** 返回是否这个对象可用
 	**/
-	virtual inline bool isEnabled() const { return getFlagState(CC_ENABLED); }
+	virtual inline bool isEnabled() const 
+	{ 
+		return getFlagState(CC_ENABLED); 
+	}
 
 	//! Sets the "enabled" property
 	/** Shortcut to modify flag CC_ENABLED
+	 ** 设置可用属性
 	**/
 	virtual inline void setEnabled(bool state) { setFlagState(CC_ENABLED,state); }
 
@@ -234,7 +242,11 @@ public:
 	virtual inline void setLocked(bool state) { setFlagState(CC_LOCKED,state); }
 
 	//shortcuts
-	inline bool isGroup() const { return (getClassID() & CC_GROUP_BIT) != 0; }
+	inline bool isGroup() const
+	{ 
+		return (getClassID() & CC_GROUP_BIT) != 0;
+	}
+
 	inline bool isLeaf() const {return (getClassID() & CC_LEAF_BIT) != 0; }
 	inline bool isCustom() const {return (getClassID() & CC_CUSTOM_BIT) != 0; }
 	inline bool isHierarchy() const { return (getClassID() & CC_HIERARCH_BIT) != 0; }
@@ -252,6 +264,7 @@ public:
 	/** Unique IDs are handled with persistent settings
 		in order to assure consistency between main app
 		and plugins!
+		返回一个新的未分配的ID
 	**/
 	static unsigned GetNextUniqueID();
 
@@ -308,6 +321,7 @@ protected:
 	//! Sets flag state
 	/** \param flag object flag to set
 		\param state flag state
+		设置标记状态
 	**/
 	virtual void setFlagState(CC_OBJECT_FLAG flag, bool state);
 

@@ -33,6 +33,7 @@
 #include <QDataStream>
 
 //! Serializable object interface
+//! 可序列化对象接口
 class ccSerializableObject
 {
 public:
@@ -41,6 +42,7 @@ public:
 	virtual ~ccSerializableObject() {}
 
 	//! Returns whether object is serializable of not
+	//! 对象是否可以序列化
 	virtual bool isSerializable() const { return false; }
 
 	//! Saves data to binay stream
@@ -52,9 +54,9 @@ public:
 	//! Deserialization flags (bit-field)
 	enum DeserializationFlags
 	{
-		DF_POINT_COORDS_64_BITS	= 1, /**< Point coordinates are stored as 64 bits double (otherwise 32 bits floats) **/
+		DF_POINT_COORDS_64_BITS = 1, /**< Point coordinates are stored as 64 bits double (otherwise 32 bits floats) **/
 		//DGM: inversion is 'historical' ;)
-		DF_SCALAR_VAL_32_BITS	= 2, /**< Scalar values are stored as 32 bits floats (otherwise 64 bits double) **/
+		DF_SCALAR_VAL_32_BITS = 2, /**< Scalar values are stored as 32 bits floats (otherwise 64 bits double) **/
 	};
 
 	//! Loads data from binay stream
@@ -100,7 +102,7 @@ public:
 	{
 		if (flags & ccSerializableObject::DF_POINT_COORDS_64_BITS)
 		{
-			for (unsigned i=0; i<count; ++i, ++out)
+			for (unsigned i = 0; i < count; ++i, ++out)
 			{
 				double val;
 				stream >> val;
@@ -109,7 +111,7 @@ public:
 		}
 		else
 		{
-			for (unsigned i=0; i<count; ++i, ++out)
+			for (unsigned i = 0; i < count; ++i, ++out)
 			{
 				float val;
 				stream >> val;
@@ -123,7 +125,7 @@ public:
 	{
 		if (flags & ccSerializableObject::DF_SCALAR_VAL_32_BITS)
 		{
-			for (unsigned i=0; i<count; ++i, ++out)
+			for (unsigned i = 0; i < count; ++i, ++out)
 			{
 				float val;
 				stream >> val;
@@ -132,7 +134,7 @@ public:
 		}
 		else
 		{
-			for (unsigned i=0; i<count; ++i, ++out)
+			for (unsigned i = 0; i < count; ++i, ++out)
 			{
 				double val;
 				stream >> val;
@@ -184,11 +186,11 @@ public:
 			while (elementCount != 0)
 			{
 				unsigned chunksCount = chunkArray.chunksCount();
-				for (unsigned i=0; i<chunksCount; ++i)
+				for (unsigned i = 0; i < chunksCount; ++i)
 				{
 					//DGM: since dataVersion>=22, we make sure to write as much items as declared in 'currentSize'!
-					unsigned toWrite = std::min<unsigned>(elementCount,chunkArray.chunkSize(i));
-					if (out.write((const char*)chunkArray.chunkStartPtr(i),sizeof(ElementType)*N*toWrite) < 0)
+					unsigned toWrite = std::min<unsigned>(elementCount, chunkArray.chunkSize(i));
+					if (out.write((const char*)chunkArray.chunkStartPtr(i), sizeof(ElementType)*N*toWrite) < 0)
 						return ccSerializableObject::WriteError();
 					assert(toWrite <= elementCount);
 					elementCount -= toWrite;
@@ -205,11 +207,11 @@ public:
 		\param dataVersion version current data version
 		\return success
 	**/
-	template <int N, class ElementType> static bool GenericArrayFromFile(GenericChunkedArray<N,ElementType>& chunkArray, QFile& in, short dataVersion) 
+	template <int N, class ElementType> static bool GenericArrayFromFile(GenericChunkedArray<N, ElementType>& chunkArray, QFile& in, short dataVersion)
 	{
 		::uint8_t componentCount = 0;
 		::uint32_t elementCount = 0;
-		if (!ReadArrayHeader(in,dataVersion,componentCount,elementCount))
+		if (!ReadArrayHeader(in, dataVersion, componentCount, elementCount))
 			return false;
 		if (componentCount != N)
 			return ccSerializableObject::CorruptError();
@@ -238,8 +240,8 @@ public:
 #else
 				//--> we read each chunk as a block (faster)
 				unsigned chunksCount = chunkArray.chunksCount();
-				for (unsigned i=0; i<chunksCount; ++i)
-					if (in.read((char*)chunkArray.chunkStartPtr(i),sizeof(ElementType)*N*chunkArray.chunkSize(i)) < 0)
+				for (unsigned i = 0; i < chunksCount; ++i)
+					if (in.read((char*)chunkArray.chunkStartPtr(i), sizeof(ElementType)*N*chunkArray.chunkSize(i)) < 0)
 						return ccSerializableObject::ReadError();
 #endif //CC_ENV_64
 			}
@@ -257,11 +259,11 @@ public:
 		\param dataVersion version current data version
 		\return success
 	**/
-	template <int N, class ElementType, class FileElementType> static bool GenericArrayFromTypedFile(GenericChunkedArray<N,ElementType>& chunkArray, QFile& in, short dataVersion)
+	template <int N, class ElementType, class FileElementType> static bool GenericArrayFromTypedFile(GenericChunkedArray<N, ElementType>& chunkArray, QFile& in, short dataVersion)
 	{
 		::uint8_t componentCount = 0;
 		::uint32_t elementCount = 0;
-		if (!ReadArrayHeader(in,dataVersion,componentCount,elementCount))
+		if (!ReadArrayHeader(in, dataVersion, componentCount, elementCount))
 			return false;
 		if (componentCount != N)
 			return ccSerializableObject::CorruptError();
@@ -275,14 +277,14 @@ public:
 			//array data (dataVersion>=20)
 			//--> saldy we can't read it as a block...
 			//we must convert each element, value by value!
-			FileElementType dummyArray[N] = {0};
+			FileElementType dummyArray[N] = { 0 };
 #ifdef CC_ENV_64
 			ElementType* data = chunkArray.data();
-			for (unsigned i=0; i<elementCount; ++i)
+			for (unsigned i = 0; i < elementCount; ++i)
 			{
-				if (in.read((char*)dummyArray,sizeof(FileElementType)*N) >= 0)
+				if (in.read((char*)dummyArray, sizeof(FileElementType)*N) >= 0)
 				{
-					for (unsigned k=0; k<N; ++k)
+					for (unsigned k = 0; k < N; ++k)
 						*data++ = static_cast<ElementType>(dummyArray[k]);
 				}
 				else
@@ -292,15 +294,15 @@ public:
 			}
 #else
 			unsigned chunksCount = chunkArray.chunksCount();
-			for (unsigned i=0; i<chunksCount; ++i)
+			for (unsigned i = 0; i < chunksCount; ++i)
 			{
 				unsigned chunkSize = chunkArray.chunkSize(i);
 				ElementType* chunkStart = chunkArray.chunkStartPtr(i);
-				for (unsigned j=0; j<chunkSize; ++j)
+				for (unsigned j = 0; j < chunkSize; ++j)
 				{
-					if (in.read((char*)dummyArray,sizeof(FileElementType)*N) >= 0)
+					if (in.read((char*)dummyArray, sizeof(FileElementType)*N) >= 0)
 					{
-						for (unsigned k=0; k<N; ++k)
+						for (unsigned k = 0; k < N; ++k)
 							*chunkStart++ = static_cast<ElementType>(dummyArray[k]);
 					}
 					else
@@ -321,9 +323,9 @@ public:
 protected:
 
 	static bool ReadArrayHeader(QFile& in,
-								short dataVersion,
-								::uint8_t &componentCount,
-								::uint32_t &elementCount)
+		short dataVersion,
+		::uint8_t &componentCount,
+		::uint32_t &elementCount)
 	{
 		assert(in.isOpen() && (in.openMode() & QIODevice::ReadOnly));
 
@@ -331,11 +333,11 @@ protected:
 			return ccSerializableObject::CorruptError();
 
 		//component count (dataVersion>=20)
-		if (in.read((char*)&componentCount,1) < 0)
+		if (in.read((char*)&componentCount, 1) < 0)
 			return ccSerializableObject::ReadError();
 
 		//element count = array size (dataVersion>=20)
-		if (in.read((char*)&elementCount,4) < 0)
+		if (in.read((char*)&elementCount, 4) < 0)
 			return ccSerializableObject::ReadError();
 
 		return true;

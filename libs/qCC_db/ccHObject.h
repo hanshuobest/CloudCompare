@@ -33,6 +33,7 @@ public: //construction
 	/** \param name object name (optional)
 	**/
 	ccHObject(QString name = QString());
+
 	//! Copy constructor
 	ccHObject(const ccHObject& object);
 
@@ -60,12 +61,19 @@ public: //base members access
 	//! Returns class ID
 	/** \return class unique ID
 	**/
-	inline virtual CC_CLASS_ENUM getClassID() const override { return CC_TYPES::HIERARCHY_OBJECT; }
+	inline virtual CC_CLASS_ENUM getClassID() const override 
+	{ 
+		return CC_TYPES::HIERARCHY_OBJECT; 
+	}
 
 	//! Returns parent object
 	/** \return parent object (NULL if no parent)
+	 ** 返回父对象
 	**/
-	inline ccHObject* getParent() const { return m_parent; }
+	inline ccHObject* getParent() const 
+	{ 
+		return m_parent;
+	}
 
 	//! Returns the icon associated to this entity
 	/** ccDBRoot will call this method: if an invalid icon is returned
@@ -133,8 +141,12 @@ public: //children management
 	//! Returns the ith child
 	/** \param childPos child position
 		\return child object (or NULL if wrong position)
+		返回第几个孩子
 	**/
-	inline ccHObject* getChild(unsigned childPos) const { return (childPos < getChildrenNumber() ? m_children[childPos] : 0); }
+	inline ccHObject* getChild(unsigned childPos) const
+	{
+		return (childPos < getChildrenNumber() ? m_children[childPos] : 0);
+	}
 
 	//! Finds an entity in this object hierarchy
 	/** \param uniqueID child unique ID
@@ -157,7 +169,7 @@ public: //children management
 		\param filter pattern for children selection
 		\param strict whether the search is strict on the type (i.e 'isA') or not (i.e. 'isKindOf')
 		\param inDisplay [optional] display in which the children are displayed
-		\return number of collected children
+		\return number of collected children返回搜集孩子数量
 	**/
 	unsigned filterChildren(Container& filteredChildren,
 							bool recursive = false,
@@ -188,11 +200,16 @@ public: //children management
 	void removeChild(int pos);
 	//! Removes all children
 	void removeAllChildren();
+
 	//! Returns child index
+	//! 获取孩子索引
 	int getChildIndex(const ccHObject* aChild) const;
+
 	//! Swaps two children
 	void swapChildren(unsigned firstChildIndex, unsigned secondChildIndex);
+
 	//! Returns index relatively to its parent or -1 if no parent
+	//! 返回相对于父对象的索引，如果没有父对象返回-1
 	int getIndex() const;
 
 	//! Transfer a given child to another parent

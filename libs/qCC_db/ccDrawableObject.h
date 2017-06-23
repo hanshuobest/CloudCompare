@@ -38,7 +38,7 @@ struct ccClipPlane
 };
 typedef std::vector<ccClipPlane> ccClipPlaneSet;
 
-//! Generic interface for (3D) drawable entities
+
 class QCC_DB_LIB_API ccDrawableObject
 {
 public:
@@ -53,27 +53,55 @@ public:
 public:  //drawing and drawing options
 
 	//! Draws entity and its children
+	//! 绘制实体及及子项
 	virtual void draw(CC_DRAW_CONTEXT& context) = 0;
 
 	//! Returns whether entity is visible or not
-	inline virtual bool isVisible() const { return m_visible; }
+	inline virtual bool isVisible() const 
+	{ 
+		return m_visible; 
+	}
+	
 	//! Sets entity visibility
-	inline virtual void setVisible(bool state) { m_visible = state; }
+	inline virtual void setVisible(bool state) 
+	{ 
+		m_visible = state; 
+	}
+	
 	//! Toggles visibility
-	inline virtual void toggleVisibility() { setVisible(!isVisible()); }
+	inline virtual void toggleVisibility() 
+	{ 
+		setVisible(!isVisible()); 
+	}
 
 	//! Returns whether visibilty is locked or not
-	inline virtual bool isVisiblityLocked() const { return m_lockedVisibility; }
+	//! 返回可见性是否被锁定
+	inline virtual bool isVisiblityLocked() const 
+	{
+		return m_lockedVisibility;
+	}
+
 	//! Locks/unlocks visibilty
 	/** If visibility is locked, the user won't be able to modify it
 		(via the properties tree for instance).
+		当锁定它之后用户就不能修改它了，默认是不锁定
 	**/
-	inline virtual void lockVisibility(bool state) { m_lockedVisibility = state; }
+	inline virtual void lockVisibility(bool state)
+	{ 
+		m_lockedVisibility = state; 
+	}
 
 	//! Returns whether entity is selected or not
-	inline virtual bool isSelected() const { return m_selected; }
+	inline virtual bool isSelected() const 
+	{ 
+		return m_selected;
+	}
+
 	//! Selects/unselects entity
-	inline virtual void setSelected(bool state) { m_selected = state; }
+	inline virtual void setSelected(bool state) 
+	{ 
+		m_selected = state;
+	}
 
 	//! Returns main OpenGL parameters for this entity
 	/** These parameters are deduced from the visiblity states
@@ -84,14 +112,22 @@ public:  //drawing and drawing options
 
 	//! Returns whether colors are enabled or not
 	inline virtual bool hasColors() const  { return false; }
+
 	//! Returns whether colors are shown or not
+	//! 返回是否显示颜色
 	inline virtual bool colorsShown() const { return m_colorsDisplayed; }
-	//! Sets colors visibility
+
+	//! 设置颜色可见，默认不显示
 	inline virtual void showColors(bool state) { m_colorsDisplayed = state; }
-	//! Toggles colors display state
-	inline virtual void toggleColors() { showColors(!colorsShown()); }
+	
+	//! 触发颜色显示状态
+	inline virtual void toggleColors() 
+	{ 
+		showColors(!colorsShown()); 
+	}
 
 	//! Returns whether normals are enabled or not
+	//! 是否法线可用
 	inline virtual bool hasNormals() const  { return false; }
 	//! Returns whether normals are shown or not
 	inline virtual bool normalsShown() const { return m_normalsDisplayed; }
@@ -131,6 +167,7 @@ public: //Name display in 3D
 	inline virtual void showNameIn3D(bool state) { m_showNameIn3D = state; }
 
 	//! Returns whether name is displayed in 3D or not
+	//! 名字是否显示在三维中
 	inline virtual bool nameShownIn3D() const { return m_showNameIn3D; }
 
 	//! Toggles name in 3D display state
@@ -158,9 +195,11 @@ public: //Temporary color
 public: //associated display management
 
 	//! Unlinks entity from a GL display (only if it belongs to it of course)
+	//! 从GL显示中取消链接实体
 	virtual void removeFromDisplay(const ccGenericGLDisplay* win);
 
 	//! Sets associated GL display
+	//! 设置关联的GL显示
 	virtual void setDisplay(ccGenericGLDisplay* win);
 
 	//! Returns associated GL display
@@ -183,6 +222,7 @@ public: //associated display management
 	//! Refreshes associated GL display
 	/** See ccGenericGLDisplay::refresh. The display will only be updated
 		if it has been 'prepared for refresh' (see prepareDisplayForRefresh).
+		更新关联的GL
 	**/
 	virtual void refreshDisplay(bool only2D = false);
 
@@ -286,9 +326,11 @@ protected: //members
 	bool m_showNameIn3D;
 
 	//! Currently associated GL display
+	//! 当前关联的GL显示
 	ccGenericGLDisplay* m_currentDisplay;
 
 	//! Active clipping planes (used for display only)
+	//! 激活裁剪平面
 	ccClipPlaneSet m_clipPlanes;
 };
 

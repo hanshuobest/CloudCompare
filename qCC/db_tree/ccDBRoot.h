@@ -96,15 +96,19 @@ public:
 	ccHObject* getRootEntity();
 
 	//! Hides properties view
+	//! 隐藏属性视图
 	void hidePropertiesView();
 	//! Updates properties view
+	//! 更新属性视图
 	void updatePropertiesView();
 
 	//! Adds an element to the DB tree
+	//! 增加一个元素到DB树中
 	void addElement(ccHObject* object, bool autoExpand = true);
 
 	//! Removes an element from the DB tree
 	/** Automatically calls prepareDisplayForRefresh on the object.
+	 ** 从DB tree中移除一个元素
 	**/
 	void removeElement(ccHObject* object);
 
@@ -112,6 +116,7 @@ public:
 	/** Faster than multiple calls to removeElement.
 		Automatically calls prepareDisplayForRefresh on the objects.
 		\warning The input container will be cleared.
+		移除多个元素
 	**/
 	void removeElements(ccHObject::Container& objects);
 
@@ -119,6 +124,7 @@ public:
 	ccHObject* find(int uniqueID) const;
 
 	//! Returns the number of selected entities in DB tree (optionally with a given type)
+	//! 返回DB树中所选实体的数量
 	int countSelectedEntities(CC_CLASS_ENUM filter = CC_TYPES::OBJECT);
 
 	//! Returns selected entities in DB tree (optionally with a given type and additional information)
@@ -136,6 +142,7 @@ public:
 	void unselectAllEntities();
 
 	//! Unloads all entities
+	//! 卸载所有项目
 	void unloadAll();
 
 	//inherited from QAbstractItemModel
@@ -145,8 +152,13 @@ public:
 	virtual QModelIndex parent(const QModelIndex &index) const override;
 	virtual int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 	virtual int columnCount(const QModelIndex &parent = QModelIndex()) const override;
+
+	// 得到该如何对一个项进行相关的操作（例如是否可以编辑）
 	virtual Qt::ItemFlags flags(const QModelIndex &index) const override;
+
+	// 设置指定索引位置的角色值
 	virtual bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override;
+
 	virtual Qt::DropActions supportedDropActions() const override;
 	virtual bool dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent) override;
 	virtual QMap<int,QVariant> itemData(const QModelIndex& index) const override;
@@ -156,7 +168,10 @@ public slots:
 	void changeSelection(const QItemSelection & selected, const QItemSelection & deselected);
 	void reflectObjectPropChange(ccHObject* obj);
 	void redrawCCObject(ccHObject* object);
+
+	// 重绘对象和它的孩子
 	void redrawCCObjectAndChildren(ccHObject* object);
+
 	void updateCCObject(ccHObject* object);
 	void deleteSelectedEntities();
 
@@ -176,6 +191,7 @@ public slots:
 	//! Selects multiple entities at once
 	/** \param entities set of the entities to 'select'
 		\param incremental whether to 'add' the input set to the selected entities set or to use it as replacement
+		一次选择多个实体
 	**/
 	void selectEntities(const ccHObject::Container& entities, bool incremental = false);
 
@@ -194,6 +210,7 @@ protected:
 	void toggleSelectedEntitiesProperty(TOGGLE_PROPERTY prop);
 
 protected slots:
+	//显示上下文菜单
 	void showContextMenu(const QPoint&);
 
 	void expandBranch();
@@ -224,6 +241,7 @@ protected:
 
 	//! Aligns the camera with the currently selected entity
 	/** \param reverse whether to use the entity's normal (false) or its inverse (true)
+	 ** 将相机与当前选择的实体对齐
 	**/
 	void alignCameraWithEntity(bool reverse);
 
@@ -231,24 +249,29 @@ protected:
 	void showPropertiesView(ccHObject* obj);
 
 	//! Entities sorting schemes
+	//! 项目排序方案
 	enum SortRules { SORT_A2Z, SORT_Z2A, SORT_BY_TYPE };
 
 	//! Sorts selected entities children
 	void sortSelectedEntitiesChildren(SortRules rule);
 
 	//! Expands or collapses hovered item
+	//! 扩展或折叠悬停项目
 	void expandOrCollapseHoveredBranch(bool expand);
 
 	//! Selects objects by type and/or name
+	//! 按对象和名称选择对象
     void selectChildrenByTypeAndName(CC_CLASS_ENUM type,
                                      bool typeIsExclusive = true,
                                      QString name = QString(),
                                      bool nameIsRegex = false);
 
 	//! Associated DB root
+	//! 关联的DB根
 	ccHObject* m_treeRoot;
 
 	//! Associated widget for DB tree
+	//! 关联的DB树部件
 	QTreeView* m_dbTreeWidget;
 
 	//! Associated widget for selected entity's properties tree
@@ -256,6 +279,7 @@ protected:
 
 	//! Selected entity's properties data model
 	QStandardItemModel* m_propertiesModel;
+
 	//! Selected entity's properties delegate
 	ccPropertiesTreeDelegate* m_ccPropDelegate;
 
@@ -298,7 +322,6 @@ protected:
 	//! Context menu action: enable bubble-view (on a sensor)
 	QAction* m_enableBubbleViewMode;
 
-	//! Last context menu pos
 	//! 最后上下文菜单位置
 	QPoint m_contextMenuPos;
 

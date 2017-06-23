@@ -1174,8 +1174,11 @@ protected: //members
 	bool m_LODEnabled;
 	//! Whether L.O.D. should be automatically disabled at the end of the rendering cycle
 	bool m_LODAutoDisable;
+
 	//! Whether the display should be refreshed on next call to 'refresh'
+	//! 下一次刷新时是否刷新显示器
 	bool m_shouldBeRefreshed;
+
 	//! Whether the mouse (cursor) has moved after being pressed or not
 	bool m_mouseMoved;
 	//! Whether the mouse is currently pressed or not

@@ -673,6 +673,7 @@ public: //other methods
 		\param pointCountBefore the number of points previously contained in this cloud
 		\param ignoreChildren whether to copy input cloud's children or not
 		\return the resulting point cloud
+		增加一个点云
 	**/
 	const ccPointCloud& append(ccPointCloud* cloud, unsigned pointCountBefore, bool ignoreChildren = false);
 

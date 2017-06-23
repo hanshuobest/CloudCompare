@@ -29,6 +29,7 @@ class ccColorRampShader;
 class ccShader;
 
 //! Display parameters of a 3D entity
+//! 显示3D实体的参数
 struct glDrawParams
 {
 	//! Display scalar field (prioritary on colors)

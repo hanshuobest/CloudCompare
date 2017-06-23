@@ -31,6 +31,7 @@
 #endif
 
 //CCShareable object (with counter)
+//带计数器对象
 class CC_CORE_LIB_API CCShareable
 {
 public:
@@ -40,6 +41,7 @@ public:
 
 	//! Increase counter
 	/** Should be called when this object is 'attached' to another one.
+	 ** 当对象连接另一个时计算器增加
 	**/
 	virtual void link();
 
@@ -50,6 +52,7 @@ public:
 
 	//! Returns the current link count
 	/** \return current link count
+	 *8 返回当前连接的数量
 	**/
 	inline virtual unsigned getLinkCount() const
 	{ 

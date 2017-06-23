@@ -225,6 +225,7 @@ void ccDBRoot::addElement(ccHObject* object, bool autoExpand/*=true*/)
 	if (!parentObject)
 	{
 		//if the object has no parent, it will be inserted at tree root
+		//如果没有父项，将在树的顶部插入
 		parentObject = m_treeRoot;
 		m_treeRoot->addChild(object);
 	}
@@ -294,6 +295,7 @@ void ccDBRoot::removeElements(ccHObject::Container& objects)
 		}
 
 		//just in case
+		//以防万一
 		object->prepareDisplayForRefresh();
 
 		int childPos = parent->getChildIndex(object);
@@ -310,6 +312,7 @@ void ccDBRoot::removeElements(ccHObject::Container& objects)
 	}
 
 	//we restore properties view
+	//恢复属性视图
 	updatePropertiesView();
 }
 
@@ -453,7 +456,7 @@ QVariant ccDBRoot::data(const QModelIndex &index, int role) const
 
 	if (role == Qt::DisplayRole)
 	{
-		QString baseName(item->getName());
+		QString baseName(item->getName()); // 对象名字
 		if (baseName.isEmpty())
 			baseName = QStringLiteral("no name");
 		//specific case
@@ -468,7 +471,7 @@ QVariant ccDBRoot::data(const QModelIndex &index, int role) const
 	{
 		return QVariant(item->getName());
 	}
-	else if (role == Qt::DecorationRole)
+	else if (role == Qt::DecorationRole) //以图标的形式呈现修饰数据
 	{
 		// does the object have an "embedded icon"? - It may be the case for ccHObject defined in plugins
 		QIcon icon = item->getIcon();
@@ -554,7 +557,7 @@ QVariant ccDBRoot::data(const QModelIndex &index, int role) const
 				return QVariant();
 		}
 	}
-	else if (role == Qt::CheckStateRole)
+	else if (role == Qt::CheckStateRole)//项目的检索状态
 	{
 		if (item->isEnabled())
 			return Qt::Checked;
@@ -601,7 +604,7 @@ bool ccDBRoot::setData(const QModelIndex &index, const QVariant &value, int role
 			if (item)
 			{
 				if (value == Qt::Checked)
-					item->setEnabled(true);
+					item->setEnabled(true);//设置可用
 				else
 					item->setEnabled(false);
 
@@ -647,7 +650,7 @@ QModelIndex ccDBRoot::index(ccHObject* object)
 		return QModelIndex();
 	}
 
-	int pos = parent->getChildIndex(object);
+	int pos = parent->getChildIndex(object);//孩子的索引位置
 	assert(pos >= 0);
 
 	return createIndex(pos, 0, object);
@@ -924,8 +927,8 @@ void ccDBRoot::reflectObjectPropChange(ccHObject* obj)
 void ccDBRoot::updatePropertiesView()
 {
 	assert(m_dbTreeWidget);
-	QItemSelectionModel* qism = m_dbTreeWidget->selectionModel();
-	QModelIndexList selectedIndexes = qism->selectedIndexes();
+	QItemSelectionModel* qism = m_dbTreeWidget->selectionModel();//返回当前的选择模型
+	QModelIndexList selectedIndexes = qism->selectedIndexes();//获取选区的全部索引
 	if (selectedIndexes.size() == 1)
 		showPropertiesView(static_cast<ccHObject*>(selectedIndexes[0].internalPointer()));
 	else
@@ -1063,7 +1066,7 @@ Qt::ItemFlags ccDBRoot::flags(const QModelIndex &index) const
 	if (!index.isValid())
 		return 0;
 
-	Qt::ItemFlags defaultFlags = QAbstractItemModel::flags(index);
+	Qt::ItemFlags defaultFlags = QAbstractItemModel::flags(index); //默认是ItemIsSelectable|Qt::ItemIsEnabled
 
 	//common flags
 	defaultFlags |= (Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable);
@@ -2042,10 +2045,10 @@ QItemSelectionModel::SelectionFlags ccCustomQTreeView::selectionCommand(const QM
 	if (index.isValid())
 	{
 		//special case: labels can only be merged with labels!
-		QModelIndexList selectedIndexes = selectionModel()->selectedIndexes();
+		QModelIndexList selectedIndexes = selectionModel()->selectedIndexes();//返回模型索引的列表
 		if (!selectedIndexes.empty() && !selectionModel()->isSelected(index))
 		{
-			ccHObject* selectedItem = static_cast<ccHObject*>(index.internalPointer());
+			ccHObject* selectedItem = static_cast<ccHObject*>(index.internalPointer());//返回关联索引的空指针
 			if (selectedItem && selectedItem->isA(CC_TYPES::LABEL_2D) != static_cast<ccHObject*>(selectedIndexes[0].internalPointer())->isA(CC_TYPES::LABEL_2D))
 				return QItemSelectionModel::ClearAndSelect;
 		}
