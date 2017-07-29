@@ -108,6 +108,7 @@ static int s_GlWindowNumber = 0;
 
 //On some versions of Qt, QGLWidget::renderText seems to need glColorf instead of glColorub!
 // See https://bugreports.qt-project.org/browse/QTBUG-6217
+// 调用opengl 中的glColor3f函数
 template<class QOpenGLFunctions> 
 inline static void glColor3ubv_safe(QOpenGLFunctions* glFunc, const unsigned char* rgb)
 {
@@ -309,7 +310,6 @@ ccGLWindow::ccGLWindow(	QSurfaceFormat* format/*=0*/,
 {
 	//start internal timer
 	m_timer.start();
-
 #ifdef CC_GL_WINDOW_USE_QWINDOW
 	setSurfaceType(QWindow::OpenGLSurface);
 
@@ -1041,6 +1041,7 @@ bool ccGLWindow::event(QEvent* evt)
 void ccGLWindow::setGLViewport(const QRect& rect)
 {
 	//correction for HD screens
+	//校正HD屏幕
 	const int retinaScale = devicePixelRatio();
 	m_glViewport = QRect(rect.left() * retinaScale, rect.top() * retinaScale, rect.width() * retinaScale, rect.height() * retinaScale);
 
@@ -1057,6 +1058,7 @@ void ccGLWindow::resizeGL(int w, int h)
 	//update OpenGL viewport
 	setGLViewport(0, 0, w, h);
 
+	// 使投影矩阵无效
 	invalidateViewport();
 	invalidateVisualization();
 
@@ -1381,7 +1383,7 @@ void ccGLWindow::requestUpdate()
 void ccGLWindow::paintGL()
 {
 #ifdef CC_GL_WINDOW_USE_QWINDOW
-	if (!isExposed())
+	if (!isExposed())//窗口是否在窗口系统中公开
 	{
 		return;
 	}
@@ -1439,7 +1441,7 @@ void ccGLWindow::paintGL()
 	renderingParams.draw3DCross = getDisplayParameters().displayCross;
 	renderingParams.passCount = m_stereoModeEnabled ? 2 : 1;
 
-	//clean the outdated messages
+	//clean the outdated messages清理过时的消息
 	{
 		std::list<MessageToDisplay>::iterator it = m_messagesToDisplay.begin();
 		qint64 currentTime_sec = m_timer.elapsed() / 1000;
@@ -1637,6 +1639,7 @@ void ccGLWindow::drawBackground(CC_DRAW_CONTEXT& CONTEXT, RenderingParams& rende
 	}
 
 	//draw 2D background primitives
+	// 绘制2D背景图元
 	//DGM: useless for now
 	if (false)
 	{
@@ -2497,6 +2500,7 @@ void ccGLWindow::drawForeground(CC_DRAW_CONTEXT& CONTEXT, RenderingParams& rende
 void ccGLWindow::stopLODCycle()
 {
 	//reset LOD rendering (if any)
+	//重置LOD渲染
 	m_currentLODState = LODState();
 }
 
@@ -2809,8 +2813,12 @@ void ccGLWindow::setPivotPoint(	const CCVector3d& P,
 		(!m_viewportParams.perspectiveView || m_viewportParams.objectCenteredView))
 	{
 		//compute the equivalent camera center
+		//计算等效相机中心
 		CCVector3d dP = m_viewportParams.pivotPoint - P;
-		CCVector3d MdP = dP; m_viewportParams.viewMat.applyRotation(MdP);
+		CCVector3d MdP = dP; 
+		m_viewportParams.viewMat.applyRotation(MdP);
+
+		// 新相机位置中心
 		CCVector3d newCameraPos = m_viewportParams.cameraCenter + MdP - dP;
 		setCameraPos(newCameraPos);
 	}
@@ -5573,7 +5581,7 @@ QImage ccGLWindow::renderToImage(	float zoomFactor/*=1.0f*/,
 		}
 		else
 		{
-			outputImage = grabFramebuffer();
+			outputImage = grabFramebuffer();//渲染并返回一个32位的RGB图像
 			if (outputImage.isNull())
 			{
 				if (!silent)

@@ -68,27 +68,31 @@ public:
 
 	//! Perspective view state透视图状态
 	bool perspectiveView;
+
 	//! Whether view is centered on displayed scene (true) or on the user eye (false)
-	/** Always true for ortho. mode.
-	 ** 视点是否在现实场景的中心
-	 **/
+	//! 视点是否在现实场景的中心
 	bool objectCenteredView;
 
 	//! Theoretical perspective 'zNear' relative position
 	double zNearCoef;
+
 	//! Actual perspective 'zNear' value
 	double zNear;
+
 	//! Actual perspective 'zFar' value
 	double zFar;
 	
 	//! Rotation pivot point (for object-centered view modes)
+	//! 旋转枢轴点（以对象为中心的视图模式）
 	CCVector3d pivotPoint;
 	
 	//! Camera center (for perspective mode)
+	//! 相机中心（透视模式）
 	CCVector3d cameraCenter;
 
 	//! Camera F.O.V. (field of view - for perspective mode only)
 	float fov;
+
 	//! Camera aspect ratio (perspective mode only)
 	float perspectiveAspectRatio;
 
@@ -144,6 +148,7 @@ struct ccGLCameraParameters
 	}
 
 	//! Unprojects a 2D point (+ normalized 'z' coordinate) in 3D
+	//! 将二维点反投影到三维空间（归一化z坐标）
 	inline bool unproject(const CCVector3d& input2D, CCVector3d& output3D) const 
 	{ 
 		return ccGL::Unproject<double, double>(input2D, modelViewMat.data(), projectionMat.data(), viewport, output3D);

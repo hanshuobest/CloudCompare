@@ -84,33 +84,33 @@ public:
 
 	//! Interaction flags (mostly with the mouse)
 	//! 鼠标交互标记
-	enum INTERACTION_FLAG 
+	enum INTERACTION_FLAG
 	{
 
 		//no interaction
 		INTERACT_NONE = 0,
 
 		//camera interactions
-		INTERACT_ROTATE          =  1,
-		INTERACT_PAN             =  2,
-		INTERACT_ZOOM_CAMERA     =  4,
-		INTERACT_2D_ITEMS        =  8, //labels, etc.
+		INTERACT_ROTATE = 1,
+		INTERACT_PAN = 2,
+		INTERACT_ZOOM_CAMERA = 4,
+		INTERACT_2D_ITEMS = 8, //labels, etc.
 		INTERACT_CLICKABLE_ITEMS = 16, //hot zone
 
 		//options / modifiers
 		INTERACT_TRANSFORM_ENTITIES = 64,
-		
+
 		//signals
-		INTERACT_SIG_RB_CLICKED  = 128,      //right button clicked
-		INTERACT_SIG_LB_CLICKED  = 256,      //left button clicked
+		INTERACT_SIG_RB_CLICKED = 128,      //right button clicked
+		INTERACT_SIG_LB_CLICKED = 256,      //left button clicked
 		INTERACT_SIG_MOUSE_MOVED = 512,      //mouse moved (only if a button is clicked)
 		INTERACT_SIG_BUTTON_RELEASED = 1024, //mouse button released
 		INTERACT_SEND_ALL_SIGNALS = INTERACT_SIG_RB_CLICKED | INTERACT_SIG_LB_CLICKED | INTERACT_SIG_MOUSE_MOVED | INTERACT_SIG_BUTTON_RELEASED,
 	};
 	Q_DECLARE_FLAGS(INTERACTION_FLAGS, INTERACTION_FLAG)
 
-	//Default interaction modes (with the mouse!)
-	static INTERACTION_FLAGS PAN_ONLY();
+		//Default interaction modes (with the mouse!)
+		static INTERACTION_FLAGS PAN_ONLY();
 	static INTERACTION_FLAGS TRANSFORM_CAMERA();
 	static INTERACTION_FLAGS TRANSFORM_ENTITIES();
 
@@ -207,23 +207,23 @@ public:
 		\param type message type (if not custom, only one message of this type at a time is accepted)
 	**/
 	virtual void displayNewMessage(const QString& message,
-									MessagePosition pos,
-									bool append=false,
-									int displayMaxDelay_sec = 2,
-									MessageType type = CUSTOM_MESSAGE);
+		MessagePosition pos,
+		bool append = false,
+		int displayMaxDelay_sec = 2,
+		MessageType type = CUSTOM_MESSAGE);
 
 	//! Activates sun light
 	virtual void setSunLight(bool state);
 	//! Toggles sun light
 	virtual void toggleSunLight();
 	//! Returns whether sun light is enabled or not
-	virtual bool sunLightEnabled() const {return m_sunLightEnabled;}
+	virtual bool sunLightEnabled() const { return m_sunLightEnabled; }
 	//! Activates custom light
 	virtual void setCustomLight(bool state);
 	//! Toggles custom light
 	virtual void toggleCustomLight();
 	//! Returns whether custom light is enabled or not
-	virtual bool customLightEnabled() const {return m_customLightEnabled;}
+	virtual bool customLightEnabled() const { return m_customLightEnabled; }
 
 	//! Sets current zoom
 	/** Warning: has no effect in viewer-centered perspective mode
@@ -236,6 +236,7 @@ public:
 	virtual void updateZoom(float zoomFactor);
 
 	//! Sets pivot visibility
+	//! 设置枢轴的可见性
 	virtual void setPivotVisibility(PivotVisibility vis);
 
 	//! Returns pivot visibility
@@ -254,11 +255,12 @@ public:
 	virtual void setPixelSize(float pixelSize);
 
 	//! Sets pivot point
-	/** Emits the 'pivotPointChanged' signal.
-	**/
-	virtual void setPivotPoint(	const CCVector3d& P,
-								bool autoUpdateCameraPos = false,
-								bool verbose = false);
+	//! Emits the 'pivotPointChanged' signal.
+	//! 设置枢轴点
+	//! P 为设置的枢轴点
+	virtual void setPivotPoint(const CCVector3d& P,
+		bool autoUpdateCameraPos = false,
+		bool verbose = false);
 
 	//! Sets camera position
 	/** Emits the 'cameraPosChanged' signal.
@@ -308,7 +310,7 @@ public:
 		automatically disable this mode.
 	**/
 	void setBubbleViewMode(bool state);
-	
+
 	//! Returns whether bubble-view mode is enabled or no
 	inline bool bubbleViewModeEnabled() const { return m_bubbleViewModeEnabled; }
 
@@ -339,7 +341,7 @@ public:
 		(see setPerspectiveState).
 	**/
 	virtual const ccGLMatrixd& getBaseViewMat();
-	
+
 	//! Sets the base view matrix
 	/** Warning: 'base view' marix is either:
 		- the rotation around the object in object-centered mode
@@ -432,21 +434,21 @@ public:
 	virtual void setZNearCoef(double coef);
 
 	//! Invalidate current visualization state
-	/** Forces view matrix update and 3D/FBO display.
-	**/
+	//! 使当前可视化状态无效
+	//! Forces view matrix update and 3D/FBO display.
 	virtual void invalidateVisualization();
 
 	//! Renders screen to an image
-	virtual QImage renderToImage(	float zoomFactor = 1.0,
-									bool dontScaleFeatures = false,
-									bool renderOverlayItems = false,
-									bool silent = false);
+	virtual QImage renderToImage(float zoomFactor = 1.0,
+		bool dontScaleFeatures = false,
+		bool renderOverlayItems = false,
+		bool silent = false);
 
 	//! Renders screen to a file
-	virtual bool renderToFile(	QString filename,
-								float zoomFactor = 1.0,
-								bool dontScaleFeatures = false,
-								bool renderOverlayItems = false);
+	virtual bool renderToFile(QString filename,
+		float zoomFactor = 1.0,
+		bool dontScaleFeatures = false,
+		bool renderOverlayItems = false);
 
 	virtual void setShader(ccShader* shader);
 	virtual void setGlFilter(ccGlFilter* filter);
@@ -536,10 +538,10 @@ public:
 		\param C3D third vertex of the 3D triangle
 		\return backprojected point
 	**/
-	CCVector3 backprojectPointOnTriangle(	const CCVector2i& P2D,
-											const CCVector3& A3D,
-											const CCVector3& B3D,
-											const CCVector3& C3D );
+	CCVector3 backprojectPointOnTriangle(const CCVector2i& P2D,
+		const CCVector3& A3D,
+		const CCVector3& B3D,
+		const CCVector3& C3D);
 
 	//! Returns unique ID
 	inline int getUniqueID() const { return m_uniqueID; }
@@ -563,7 +565,7 @@ public: //LOD
 	//! Returns whether LOD is enabled on this display or not
 	//  返回是否在此显示器上启用LOD
 	inline bool isLODEnabled() const
-	{ 
+	{
 		return m_LODEnabled;
 	}
 
@@ -608,7 +610,7 @@ public: //stereo mode
 
 		//! Whether stereo-mode is 'analgyph' or real stereo mode
 		inline bool isAnaglyph() const { return glassType <= 4; }
-		
+
 		bool autoFocal;
 		double focalDist;
 		double eyeSepFactor;
@@ -623,7 +625,7 @@ public: //stereo mode
 
 	//! Returns whether the stereo display mode is enabled or not
 	inline bool stereoModeIsEnabled() const { return m_stereoModeEnabled; }
-	
+
 	//! Returns the current stereo mode parameters
 	inline const StereoParams& getStereoParams() const { return m_stereoParams; }
 
@@ -637,7 +639,7 @@ public: //stereo mode
 	//! Whether the pivot point is automatically set at the center of the screen
 	bool autoPickPivotAtCenter() const { return m_autoPickPivotAtCenter; }
 
-public slots:
+	public slots:
 
 	//! Applies a 1:1 global zoom
 	void zoomGlobal();
@@ -661,7 +663,7 @@ public slots:
 	inline void update() { paintGL(); }
 #endif
 
-protected slots:
+	protected slots:
 
 #ifdef CC_GL_WINDOW_USE_QWINDOW
 	//! Updates the display
@@ -669,6 +671,7 @@ protected slots:
 #endif
 
 	//! Renders the next L.O.D. level
+	//! 渲染下一个LOD
 	void renderNextLODLevel();
 
 	//! Stops frame rate test
@@ -862,9 +865,9 @@ protected: //rendering
 		unsigned char passCount;
 
 		//2D background
-		bool drawBackground;
-		bool clearDepthLayer;
-		bool clearColorLayer;
+		bool drawBackground;//是否画背景
+		bool clearDepthLayer;//是否清除深度层
+		bool clearColorLayer;//是否清除颜色层
 
 		//3D central layer
 		//3D 中心层
@@ -962,13 +965,15 @@ protected: //other methods
 	};
 
 	//! Computes the projection matrix
-	ccGLMatrixd computeProjectionMatrix(	const CCVector3d& cameraCenter,
-											bool withGLfeatures, 
-											ProjectionMetrics* metrics = 0, 
-											double* eyeOffset = 0) const;
+	ccGLMatrixd computeProjectionMatrix(const CCVector3d& cameraCenter,
+		bool withGLfeatures,
+		ProjectionMetrics* metrics = 0,
+		double* eyeOffset = 0) const;
 	void updateModelViewMatrix();
 	void updateProjectionMatrix();
+	//! 设置标准正交中心
 	void setStandardOrthoCenter();
+
 	void setStandardOrthoCorner();
 
 	//Lights controls (OpenGL scripts)
@@ -985,13 +990,13 @@ protected: //other methods
 	struct PickingParameters
 	{
 		//! Default constructor
-		PickingParameters(	PICKING_MODE _mode = NO_PICKING,
-							int _centerX = 0,
-							int _centerY = 0,
-							int _pickWidth = 5,
-							int _pickHeight = 5,
-							bool _pickInSceneDB = true,
-							bool _pickInLocalDB = true)
+		PickingParameters(PICKING_MODE _mode = NO_PICKING,
+			int _centerX = 0,
+			int _centerY = 0,
+			int _pickWidth = 5,
+			int _pickHeight = 5,
+			bool _pickInSceneDB = true,
+			bool _pickInLocalDB = true)
 			: mode(_mode)
 			, centerX(_centerX)
 			, centerY(_centerY)
@@ -1022,12 +1027,12 @@ protected: //other methods
 	void startCPUBasedPointPicking(const PickingParameters& params);
 
 	//! Processes the picking process result and sends the corresponding signal
-	void processPickingResult(	const PickingParameters& params,
-								ccHObject* pickedEntity,
-								int pickedItemIndex,
-								const CCVector3* nearestPoint = 0,
-								const std::unordered_set<int>* selectedIDs = 0);
-	
+	void processPickingResult(const PickingParameters& params,
+		ccHObject* pickedEntity,
+		int pickedItemIndex,
+		const CCVector3* nearestPoint = 0,
+		const std::unordered_set<int>* selectedIDs = 0);
+
 	//! Updates currently active items list (m_activeItems)
 	/** The items must be currently displayed in this context
 		AND at least one of them must be under the mouse cursor.
@@ -1148,9 +1153,10 @@ protected: //members
 	GLuint m_pivotGLList;
 
 	//! Viewport parameters (zoom, etc.)
+	//! 视口参数
 	ccViewportParameters m_viewportParams;
 
-    //! Last mouse position
+	//! Last mouse position
 	QPoint m_lastMousePos;
 	//! Last mouse orientation
 	// 最后鼠标的方向
@@ -1161,10 +1167,12 @@ protected: //members
 	//! Complete visualization matrix (GL style - double version)
 	ccGLMatrixd m_viewMatd;
 	//! Whether the model veiw matrix is valid (or need to be recomputed)
+	//! 是否模型视图矩阵有效
 	bool m_validModelviewMatrix;
 	//! Projection matrix (GL style - double version)
 	ccGLMatrixd m_projMatd;
 	//! Whether the projection matrix is valid (or need to be recomputed)
+	//! 判断投影矩阵是否有效
 	bool m_validProjectionMatrix;
 	//! Distance between the camera and the displayed objects bounding-box
 	double m_cameraToBBCenterDist;
@@ -1184,6 +1192,7 @@ protected: //members
 	bool m_shouldBeRefreshed;
 
 	//! Whether the mouse (cursor) has moved after being pressed or not
+	//! 鼠标是否在按下后移动
 	bool m_mouseMoved;
 	//! Whether the mouse is currently pressed or not
 	bool m_mouseButtonPressed;
@@ -1239,7 +1248,7 @@ protected: //members
 	float m_sunLightPos[4];
 	//! Whether sun light is enabled or not
 	bool m_sunLightEnabled;
-	
+
 	//! Custom light position
 	/** Relative to object.
 	**/
@@ -1252,16 +1261,17 @@ protected: //members
 	//! Clickable item
 	struct ClickableItem
 	{
-		enum Role {	NO_ROLE,
-					INCREASE_POINT_SIZE,
-					DECREASE_POINT_SIZE,
-					LEAVE_BUBBLE_VIEW_MODE,
-					LEAVE_FULLSCREEN_MODE,
+		enum Role {
+			NO_ROLE,
+			INCREASE_POINT_SIZE,
+			DECREASE_POINT_SIZE,
+			LEAVE_BUBBLE_VIEW_MODE,
+			LEAVE_FULLSCREEN_MODE,
 		};
 
 		Role role;
 		QRect area;
-		
+
 		ClickableItem() : role(NO_ROLE) {}
 		ClickableItem(Role _role, QRect _area) : role(_role), area(_area) {}
 	};
@@ -1388,7 +1398,7 @@ protected: //members
 
 	//! Wether exclusive full screen is enabled or not
 	bool m_exclusiveFullscreen;
-	
+
 	//! Former geometry (for exclusive full-screen display)
 	QByteArray m_formerGeometry;
 
@@ -1423,7 +1433,7 @@ protected: //members
 	bool m_autoPickPivotAtCenter;
 
 	//! Candidate pivot point (will be used when the mouse is released)
-	//! 候选轴点
+	//! 候选轴点(当鼠标释放的时候可用)
 	CCVector3d m_autoPivotCandidate;
 
 private:

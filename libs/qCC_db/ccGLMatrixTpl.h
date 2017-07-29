@@ -951,9 +951,10 @@ public:
 				+ static_cast<float>(CC_MAT_R32) * vy
 				+ static_cast<float>(CC_MAT_R33) * vz;
 	}
-	//! Applies rotation only to a 3D vector (in place) - double version  仅将旋转应用于3D矢量
-	/** Input vector is directly modified after calling this method
-	**/
+
+	//!  仅将旋转应用于3D矢量
+	//! Applies rotation only to a 3D vector (in place) - double version 
+	//! Input vector is directly modified after calling this method
 	inline void applyRotation(Vector3Tpl<double>& vec) const
 	{
 		double vx = vec.x;

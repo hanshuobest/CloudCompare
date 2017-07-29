@@ -180,7 +180,9 @@ public:
 	inline Vector3Tpl cross(const Vector3Tpl &v) const { return Vector3Tpl((y*v.z)-(z*v.y), (z*v.x)-(x*v.z), (x*v.y)-(y*v.x)); }
 	//! Returns vector square norm
 	inline Type norm2() const { return x*x + y*y + z*z; }
+
 	//! Returns vector square norm (forces double precision output)
+	//! 返回向量模的平方
 	inline double norm2d() const { return static_cast<double>(x)*x + static_cast<double>(y)*y + static_cast<double>(z)*z; }
 	//! Returns vector norm
 	inline Type norm() const { return static_cast<Type>(sqrt(norm2d())); }
