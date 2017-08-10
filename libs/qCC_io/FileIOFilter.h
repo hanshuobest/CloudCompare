@@ -28,24 +28,25 @@
 class QWidget;
 
 //! Typical I/O filter errors
-enum CC_FILE_ERROR {CC_FERR_NO_ERROR,
-					CC_FERR_BAD_ARGUMENT,
-					CC_FERR_UNKNOWN_FILE,
-					CC_FERR_WRONG_FILE_TYPE,
-					CC_FERR_WRITING,
-					CC_FERR_READING,
-					CC_FERR_NO_SAVE,
-					CC_FERR_NO_LOAD,
-					CC_FERR_BAD_ENTITY_TYPE,
-					CC_FERR_CANCELED_BY_USER,
-					CC_FERR_NOT_ENOUGH_MEMORY,
-					CC_FERR_MALFORMED_FILE,
-					CC_FERR_CONSOLE_ERROR,
-					CC_FERR_BROKEN_DEPENDENCY_ERROR,
-					CC_FERR_FILE_WAS_WRITTEN_BY_UNKNOWN_PLUGIN,
-					CC_FERR_THIRD_PARTY_LIB_FAILURE,
-					CC_FERR_THIRD_PARTY_LIB_EXCEPTION,
-					CC_FERR_NOT_IMPLEMENTED,
+enum CC_FILE_ERROR {
+	CC_FERR_NO_ERROR,
+	CC_FERR_BAD_ARGUMENT,
+	CC_FERR_UNKNOWN_FILE,
+	CC_FERR_WRONG_FILE_TYPE,
+	CC_FERR_WRITING,
+	CC_FERR_READING,
+	CC_FERR_NO_SAVE,
+	CC_FERR_NO_LOAD,
+	CC_FERR_BAD_ENTITY_TYPE,
+	CC_FERR_CANCELED_BY_USER,
+	CC_FERR_NOT_ENOUGH_MEMORY,
+	CC_FERR_MALFORMED_FILE,
+	CC_FERR_CONSOLE_ERROR,
+	CC_FERR_BROKEN_DEPENDENCY_ERROR,
+	CC_FERR_FILE_WAS_WRITTEN_BY_UNKNOWN_PLUGIN,
+	CC_FERR_THIRD_PARTY_LIB_FAILURE,
+	CC_FERR_THIRD_PARTY_LIB_EXCEPTION,
+	CC_FERR_NOT_IMPLEMENTED,
 };
 
 //! Generic file I/O filter
@@ -60,6 +61,7 @@ public: //initialization
 	virtual ~FileIOFilter() {}
 
 	//! Generic loading parameters
+	//! 泛型加载参数
 	struct LoadParameters
 	{
 		//! Default constructor
@@ -87,6 +89,7 @@ public: //initialization
 	};
 
 	//! Generic saving parameters
+	//! 泛型保存参数
 	struct SaveParameters
 	{
 		//! Default constructor
@@ -109,9 +112,9 @@ public: //public interface (to be reimplemented by each I/O filter)
 
 	//! Returns whether this I/O filter can import files
 	//  返回I/O过滤器是否可以导入
-	virtual bool importSupported() const 
-	{ 
-		return false; 
+	virtual bool importSupported() const
+	{
+		return false;
 	}
 
 	//! Loads one or more entities from a file
@@ -122,14 +125,15 @@ public: //public interface (to be reimplemented by each I/O filter)
 		\param parameters generic loading parameters
 		\return error返回错误
 	**/
-	virtual CC_FILE_ERROR loadFile(	QString filename,
-									ccHObject& container,
-									LoadParameters& parameters)
+	virtual CC_FILE_ERROR loadFile(QString filename,
+		ccHObject& container,
+		LoadParameters& parameters)
 	{
-		 return CC_FERR_NOT_IMPLEMENTED;
+		return CC_FERR_NOT_IMPLEMENTED;
 	}
 
 	//! Returns whether this I/O filter can export files
+	//! 返回过滤器是否可以导出文件
 	virtual bool exportSupported() const { return false; }
 
 	//! Saves an entity (or a group of) to a file
@@ -139,11 +143,11 @@ public: //public interface (to be reimplemented by each I/O filter)
 		\param parameters generic saving parameters
 		\return error
 	**/
-	virtual CC_FILE_ERROR saveToFile(	ccHObject* entity,
-										QString filename,
-										SaveParameters& parameters)
+	virtual CC_FILE_ERROR saveToFile(ccHObject* entity,
+		QString filename,
+		SaveParameters& parameters)
 	{
-		 return CC_FERR_NOT_IMPLEMENTED;
+		return CC_FERR_NOT_IMPLEMENTED;
 	}
 
 	//! Returns the file filter(s) for this I/O filter
@@ -187,10 +191,10 @@ public: //static methods
 		\param filter input filter
 		\return loaded entities (or 0 if an error occurred)
 	**/
-	QCC_IO_LIB_API static ccHObject* LoadFromFile(	const QString& filename,
-													LoadParameters& parameters,
-													Shared filter,
-													CC_FILE_ERROR& result);
+	QCC_IO_LIB_API static ccHObject* LoadFromFile(const QString& filename,
+		LoadParameters& parameters,
+		Shared filter,
+		CC_FILE_ERROR& result);
 
 	//! Loads one or more entities from a file with known type
 	/** Shortcut to the other version of FileIOFilter::LoadFromFile
@@ -199,10 +203,10 @@ public: //static methods
 		\param fileFilter input filter 'file filter' (if empty, the best I/O filter will be guessed from the file extension)
 		\return loaded entities (or 0 if an error occurred)
 	**/
-	QCC_IO_LIB_API static ccHObject* LoadFromFile(	const QString& filename,
-													LoadParameters& parameters,
-													CC_FILE_ERROR& result,
-													QString fileFilter = QString());
+	QCC_IO_LIB_API static ccHObject* LoadFromFile(const QString& filename,
+		LoadParameters& parameters,
+		CC_FILE_ERROR& result,
+		QString fileFilter = QString());
 
 	//! Saves an entity (or a group of) to a specific file thanks to a given filter
 	/** Shortcut to FileIOFilter::saveFile
@@ -212,10 +216,10 @@ public: //static methods
 		\param filter output filter
 		\return error type (if any)
 	**/
-	QCC_IO_LIB_API static CC_FILE_ERROR SaveToFile(	ccHObject* entities,
-													const QString& filename,
-													SaveParameters& parameters,
-													Shared filter);
+	QCC_IO_LIB_API static CC_FILE_ERROR SaveToFile(ccHObject* entities,
+		const QString& filename,
+		SaveParameters& parameters,
+		Shared filter);
 
 	//! Saves an entity (or a group of) to a specific file thanks to a given filter
 	/** Shortcut to the other version of FileIOFilter::SaveToFile
@@ -225,10 +229,10 @@ public: //static methods
 		\param fileFilter output filter 'file filter'
 		\return error type (if any)
 	**/
-	QCC_IO_LIB_API static CC_FILE_ERROR SaveToFile(	ccHObject* entities,
-													const QString& filename,
-													SaveParameters& parameters,
-													QString fileFilter);
+	QCC_IO_LIB_API static CC_FILE_ERROR SaveToFile(ccHObject* entities,
+		const QString& filename,
+		SaveParameters& parameters,
+		QString fileFilter);
 
 	//! Shortcut to the ccGlobalShiftManager mechanism specific for files
 	/** \param[in] P sample point (typically the first loaded)
@@ -237,10 +241,10 @@ public: //static methods
 		\param[in] useInputCoordinatesShiftIfPossible whether to use the input 'PShift' vector if possible
 		\return whether global shift has been defined/enabled
 	**/
-	QCC_IO_LIB_API static bool HandleGlobalShift(	const CCVector3d& P,
-													CCVector3d& Pshift,
-													LoadParameters& loadParameters,
-													bool useInputCoordinatesShiftIfPossible = false);
+	QCC_IO_LIB_API static bool HandleGlobalShift(const CCVector3d& P,
+		CCVector3d& Pshift,
+		LoadParameters& loadParameters,
+		bool useInputCoordinatesShiftIfPossible = false);
 
 	//! Displays (to console) the message corresponding to a given error code
 	/** \param err error code
@@ -248,8 +252,8 @@ public: //static methods
 		\param filename corresponding file
 	**/
 	QCC_IO_LIB_API static void DisplayErrorMessage(CC_FILE_ERROR err,
-									const QString& action,
-									const QString& filename);
+		const QString& action,
+		const QString& filename);
 
 	//! Returns whether special characters are present in the input string
 	QCC_IO_LIB_API static bool CheckForSpecialChars(QString filename);
@@ -257,6 +261,7 @@ public: //static methods
 public: //global filters registration mechanism
 
 	//! Init internal filters (should be called once)
+	// 初始内部过滤器（应该立即调用）
 	QCC_IO_LIB_API static void InitInternalFilters();
 
 	//! Registers a new filter
@@ -280,10 +285,12 @@ public: //global filters registration mechanism
 	//! Unregisters all filters
 	/** Should be called at the end of the application
 	**/
+	// 不注册所有过滤器，在应用的结尾处调用
 	QCC_IO_LIB_API static void UnregisterAll();
 
 	//! Called when the filter is unregistered
 	/** Does nothing by default **/
+	// 当过滤器未注册时调用，默认什么都不做
 	virtual void unregister() {}
 
 };

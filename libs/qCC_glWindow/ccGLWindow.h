@@ -61,7 +61,6 @@ typedef QOpenGLWidget ccGLWindowParent;
 #endif
 
 
-//! OpenGL 3D view
 class ccGLWindow : public ccGLWindowParent, public ccGenericGLDisplay
 {
 	Q_OBJECT
@@ -795,9 +794,10 @@ signals:
 protected: //rendering
 
 	//Default OpenGL functions set
+	// 提供了Opengl2.1提供的所有函数
 	typedef QOpenGLFunctions_2_1 ccQOpenGLFunctions;
 
-	//! Returns the set of OpenGL functions
+	//! 返回opengl函数集合
 	inline ccQOpenGLFunctions* functions() const { return context() ? context()->versionFunctions<ccQOpenGLFunctions>() : 0; }
 
 #ifdef CC_GL_WINDOW_USE_QWINDOW
@@ -915,9 +915,7 @@ protected: //other methods
 	**/
 	virtual const ccGLMatrixd& getProjectionMatrix();
 
-	//! Processes the clickable items
-	/** \return true if an item has been clicked
-	**/
+	// 处理可单击项目，成功返回1
 	bool processClickableItems(int x, int y);
 
 	//! Sets current font size

@@ -73,7 +73,7 @@ enum CC_DRAWING_FLAGS
 
 //! Display context
 
-//  显示上下文
+//  定义显示上下文结构体
 struct ccGLDrawContext
 {
 	//! Drawing options (see below)
@@ -217,6 +217,6 @@ struct ccGLDrawContext
 		return qGLContext ? qGLContext->versionFunctions<TYPE>() : 0;
 	}   
 };
-typedef ccGLDrawContext CC_DRAW_CONTEXT;//显示上下文
+typedef ccGLDrawContext CC_DRAW_CONTEXT;//显示上下文结构体对象
 
 #endif //CC_GL_DRAW_CONTEXT_HEADER

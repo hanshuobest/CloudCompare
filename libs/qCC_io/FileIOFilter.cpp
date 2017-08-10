@@ -67,6 +67,7 @@
 /** Filters are uniquely recognized by their 'file filter' string.
 	We use a std::vector so as to keep the insertion ordering!
 **/
+// 保存可用的过滤器
 FileIOFilter::FilterContainer s_ioFilters;
 
 void FileIOFilter::InitInternalFilters()
