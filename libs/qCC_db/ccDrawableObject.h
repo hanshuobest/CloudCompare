@@ -237,6 +237,7 @@ public: //Transformation matrix management (for display only)
 		(distance computation, etc.) for instance.
 		Note: GL transformation is automatically enabled.
 	**/
+	// 设置旋转平移变换
 	virtual void setGLTransformation(const ccGLMatrix& trans);
 
 	//! Enables/disables associated GL transformation

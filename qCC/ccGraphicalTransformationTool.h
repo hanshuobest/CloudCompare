@@ -60,6 +60,7 @@ public:
 	const ccHObject& getValidEntities() const { return m_toTransform; }
 
 	//! Sets the rotation center
+	// 设置旋转中心
 	void setRotationCenter(CCVector3d& center);
 
 protected slots:
@@ -91,6 +92,7 @@ protected:
 	void clear();
 
 	//! Updates all selected entities GL transformation matrices
+	// 更新所有选中实体GL转换矩阵
 	void updateAllGLTransformations();
 
 	//! List of entities to be transformed
@@ -100,11 +102,13 @@ protected:
 	ccGLMatrixd m_rotation;
 
 	//! Current translation
+	// 当前平移
 	CCVector3d m_translation;
 
 	//! Rotation center
 	/** The rotation center is actually the center of gravity of the selected 'entities'
 	**/
+	// 旋转中心，实际上是所选实体的重心
 	CCVector3d m_rotationCenter;
 };
 

@@ -37,7 +37,10 @@ public:
 
 	bool init(unsigned w, unsigned h);
 	void reset();
+
+	// ∞Û∂®÷°ª∫¥Ê∂‘œÛ
 	bool start();
+
 	void stop();
 
 	inline bool isValid() const { return m_fboId; }

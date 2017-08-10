@@ -33,10 +33,10 @@ ccGraphicalTransformationTool::ccGraphicalTransformationTool(QWidget* parent)
 {
 	setupUi(this);
 
-	connect(pauseButton,	SIGNAL(toggled(bool)),	this, SLOT(pause(bool)));
-	connect(okButton,		SIGNAL(clicked()),		this, SLOT(apply()));
-	connect(razButton,		SIGNAL(clicked()),		this, SLOT(reset()));
-	connect(cancelButton,	SIGNAL(clicked()),		this, SLOT(cancel()));
+	connect(pauseButton, SIGNAL(toggled(bool)), this, SLOT(pause(bool)));
+	connect(okButton, SIGNAL(clicked()), this, SLOT(apply()));
+	connect(razButton, SIGNAL(clicked()), this, SLOT(reset()));
+	connect(cancelButton, SIGNAL(clicked()), this, SLOT(cancel()));
 
 	//add shortcuts
 	addOverridenShortcut(Qt::Key_Space); //space bar for the "pause" button
@@ -52,7 +52,7 @@ ccGraphicalTransformationTool::~ccGraphicalTransformationTool()
 
 void ccGraphicalTransformationTool::onShortcutTriggered(int key)
 {
- 	switch(key)
+	switch (key)
 	{
 	case Qt::Key_Space:
 		pauseButton->toggle();
@@ -80,13 +80,13 @@ void ccGraphicalTransformationTool::pause(bool state)
 	if (state)
 	{
 		m_associatedWin->setInteractionMode(ccGLWindow::TRANSFORM_CAMERA());
-		m_associatedWin->displayNewMessage("Transformation [PAUSED]",ccGLWindow::UPPER_CENTER_MESSAGE,false,3600,ccGLWindow::MANUAL_TRANSFORMATION_MESSAGE);
-		m_associatedWin->displayNewMessage("Unpause to transform again",ccGLWindow::UPPER_CENTER_MESSAGE,true,3600,ccGLWindow::MANUAL_TRANSFORMATION_MESSAGE);
+		m_associatedWin->displayNewMessage("Transformation [PAUSED]", ccGLWindow::UPPER_CENTER_MESSAGE, false, 3600, ccGLWindow::MANUAL_TRANSFORMATION_MESSAGE);
+		m_associatedWin->displayNewMessage("Unpause to transform again", ccGLWindow::UPPER_CENTER_MESSAGE, true, 3600, ccGLWindow::MANUAL_TRANSFORMATION_MESSAGE);
 	}
 	else
 	{
 		m_associatedWin->setInteractionMode(ccGLWindow::TRANSFORM_ENTITIES());
-		m_associatedWin->displayNewMessage("[Rotation/Translation mode]",ccGLWindow::UPPER_CENTER_MESSAGE,false,3600,ccGLWindow::MANUAL_TRANSFORMATION_MESSAGE);
+		m_associatedWin->displayNewMessage("[Rotation/Translation mode]", ccGLWindow::UPPER_CENTER_MESSAGE, false, 3600, ccGLWindow::MANUAL_TRANSFORMATION_MESSAGE);
 	}
 
 	//update mini-GUI
@@ -102,8 +102,8 @@ void ccGraphicalTransformationTool::clear()
 	m_toTransform.detatchAllChildren();
 
 	m_rotation.toIdentity();
-	m_translation = CCVector3d(0,0,0);
-	m_rotationCenter = CCVector3d(0,0,0);
+	m_translation = CCVector3d(0, 0, 0);
+	m_rotationCenter = CCVector3d(0, 0, 0);
 }
 
 bool ccGraphicalTransformationTool::addEntity(ccHObject* entity)
@@ -136,7 +136,7 @@ bool ccGraphicalTransformationTool::addEntity(ccHObject* entity)
 	//eventually, we must check that there is no "parent + sibling" in the selection!
 	//otherwise, the sibling will be rotated twice!
 	unsigned n = m_toTransform.getChildrenNumber();
-	for (unsigned i=0; i<n; )
+	for (unsigned i = 0; i < n; )
 	{
 		ccHObject* previous = m_toTransform.getChild(i);
 		if (previous->isAncestorOf(entity))
@@ -157,7 +157,7 @@ bool ccGraphicalTransformationTool::addEntity(ccHObject* entity)
 		}
 	}
 
-	m_toTransform.addChild(entity,ccHObject::DP_NONE);
+	m_toTransform.addChild(entity, ccHObject::DP_NONE);
 
 	return true;
 }
@@ -173,10 +173,10 @@ bool ccGraphicalTransformationTool::linkWith(ccGLWindow* win)
 	{
 		return false;
 	}
-	
+
 	assert(!win || m_toTransform.getChildrenNumber() == 0);
 	m_toTransform.setDisplay(win);
-	
+
 	return true;
 }
 
@@ -192,7 +192,7 @@ bool ccGraphicalTransformationTool::start()
 		return false;
 
 	m_rotation.toIdentity();
-	m_translation = CCVector3d(0,0,0);
+	m_translation = CCVector3d(0, 0, 0);
 	m_rotationCenter = CCVector3d::fromArray(m_toTransform.getBB_recursive().getCenter().u); //m_rotation center == selected entities center
 
 	//activate "moving mode" in associated GL window
@@ -200,10 +200,10 @@ bool ccGraphicalTransformationTool::start()
 	m_associatedWin->setPickingMode(ccGLWindow::NO_PICKING);
 	//the user must not close this window!
 	m_associatedWin->setUnclosable(true);
-	connect(m_associatedWin, SIGNAL(rotation(const ccGLMatrixd&)),		this, SLOT(glRotate(const ccGLMatrixd&)));
-	connect(m_associatedWin, SIGNAL(translation(const CCVector3d&)),	this, SLOT(glTranslate(const CCVector3d&)));
-	m_associatedWin->displayNewMessage(QString(),ccGLWindow::UPPER_CENTER_MESSAGE); //clear the area
-	m_associatedWin->displayNewMessage("[Rotation/Translation mode]",ccGLWindow::UPPER_CENTER_MESSAGE,false,3600,ccGLWindow::MANUAL_TRANSFORMATION_MESSAGE);
+	connect(m_associatedWin, SIGNAL(rotation(const ccGLMatrixd&)), this, SLOT(glRotate(const ccGLMatrixd&)));
+	connect(m_associatedWin, SIGNAL(translation(const CCVector3d&)), this, SLOT(glTranslate(const CCVector3d&)));
+	m_associatedWin->displayNewMessage(QString(), ccGLWindow::UPPER_CENTER_MESSAGE); //clear the area
+	m_associatedWin->displayNewMessage("[Rotation/Translation mode]", ccGLWindow::UPPER_CENTER_MESSAGE, false, 3600, ccGLWindow::MANUAL_TRANSFORMATION_MESSAGE);
 	m_associatedWin->redraw(true, false);
 
 	return ccOverlayDialog::start();
@@ -218,7 +218,7 @@ void ccGraphicalTransformationTool::stop(bool state)
 		m_associatedWin->setPickingMode(ccGLWindow::DEFAULT_PICKING);
 		m_associatedWin->setUnclosable(false);
 		m_associatedWin->disconnect(this);
-		m_associatedWin->displayNewMessage("[Rotation/Translation mode OFF]",ccGLWindow::UPPER_CENTER_MESSAGE,false,2,ccGLWindow::MANUAL_TRANSFORMATION_MESSAGE);
+		m_associatedWin->displayNewMessage("[Rotation/Translation mode OFF]", ccGLWindow::UPPER_CENTER_MESSAGE, false, 2, ccGLWindow::MANUAL_TRANSFORMATION_MESSAGE);
 		m_associatedWin->redraw(true, false);
 	}
 
@@ -227,9 +227,9 @@ void ccGraphicalTransformationTool::stop(bool state)
 
 void ccGraphicalTransformationTool::glTranslate(const CCVector3d& realT)
 {
-	CCVector3d t(	realT.x * (TxCheckBox->isChecked() ? 1 : 0),
-					realT.y * (TyCheckBox->isChecked() ? 1 : 0),
-					realT.z * (TzCheckBox->isChecked() ? 1 : 0));
+	CCVector3d t(realT.x * (TxCheckBox->isChecked() ? 1 : 0),
+		realT.y * (TyCheckBox->isChecked() ? 1 : 0),
+		realT.z * (TzCheckBox->isChecked() ? 1 : 0));
 
 	if (t.norm2() != 0)
 	{
@@ -262,14 +262,15 @@ void ccGraphicalTransformationTool::glRotate(const ccGLMatrixd& rotMat)
 void ccGraphicalTransformationTool::reset()
 {
 	m_rotation.toIdentity();
-	m_translation = CCVector3d(0,0,0);
+	m_translation = CCVector3d(0, 0, 0);
 
 	updateAllGLTransformations();
 }
 
 void ccGraphicalTransformationTool::setRotationCenter(CCVector3d& center)
 {
-	m_translation += (m_rotationCenter-center) - m_rotation*(m_rotationCenter-center);
+	// 计算平移量
+	m_translation += (m_rotationCenter - center) - m_rotation*(m_rotationCenter - center);
 	m_rotationCenter = center;
 
 	updateAllGLTransformations();
@@ -278,11 +279,12 @@ void ccGraphicalTransformationTool::setRotationCenter(CCVector3d& center)
 void ccGraphicalTransformationTool::updateAllGLTransformations()
 {
 	//we recompute global GL transformation matrix
+	// 重新计算全局GL变换矩阵 4 * 4
 	ccGLMatrixd newTrans = m_rotation;
 	newTrans += m_rotationCenter + m_translation - m_rotation * m_rotationCenter;
 
 	ccGLMatrix newTransf(newTrans.data());
-	for (unsigned i=0; i<m_toTransform.getChildrenNumber(); ++i)
+	for (unsigned i = 0; i < m_toTransform.getChildrenNumber(); ++i)
 	{
 		ccHObject* child = m_toTransform.getChild(i);
 		child->setGLTransformation(newTransf);
@@ -305,14 +307,14 @@ void ccGraphicalTransformationTool::apply()
 		//convert matrix back and forth so as to be sure to get a 'true' rotation matrix
 		//DGM: we use Euler angles, as the axis/angle method (formerly used) is not robust
 		//enough! Shifts could be perceived by the user.
-		double phi_rad,theta_rad,psi_rad;
+		double phi_rad, theta_rad, psi_rad;
 		CCVector3d t3D;
-		finalTrans.getParameters(phi_rad,theta_rad,psi_rad,t3D);
-		finalTransCorrected.initFromParameters(phi_rad,theta_rad,psi_rad,t3D);
+		finalTrans.getParameters(phi_rad, theta_rad, psi_rad, t3D);
+		finalTransCorrected.initFromParameters(phi_rad, theta_rad, psi_rad, t3D);
 
 #ifdef QT_DEBUG
 		ccLog::Print("[GraphicalTransformationTool] Final transformation (before correction):");
-		ccLog::Print(finalTrans.toString(12,' ')); //full precision
+		ccLog::Print(finalTrans.toString(12, ' ')); //full precision
 		ccLog::Print(QString("Angles(%1,%2,%3) T(%5,%6,%7)").arg(phi_rad).arg(theta_rad).arg(psi_rad).arg(t3D.x).arg(t3D.y).arg(t3D.z));
 #endif
 	}
@@ -322,20 +324,20 @@ void ccGraphicalTransformationTool::apply()
 	//test: compute rotation "norm" (as it may not be exactly 1 due to numerical (in)accuracy!)
 	{
 		ccGLMatrixd finalRotation = finalTransCorrected;
-		finalRotation.setTranslation(CCVector3(0,0,0));
+		finalRotation.setTranslation(CCVector3(0, 0, 0));
 		ccGLMatrixd finalRotationT = finalRotation.transposed();
 		ccGLMatrixd idTrans = finalRotation * finalRotationT;
 		double norm = idTrans.data()[0] * idTrans.data()[5] * idTrans.data()[10];
 		ccLog::PrintDebug("[GraphicalTransformationTool] T*T-1:");
-		ccLog::PrintDebug(idTrans.toString(12,' ')); //full precision
-		ccLog::PrintDebug(QString("Rotation norm = %1").arg(norm,0,'f',12));
+		ccLog::PrintDebug(idTrans.toString(12, ' ')); //full precision
+		ccLog::PrintDebug(QString("Rotation norm = %1").arg(norm, 0, 'f', 12));
 	}
 #endif
 
 	//update GL transformation for all entities
 	ccGLMatrix correctedFinalTrans(finalTransCorrected.data());
 
-	for (unsigned i=0; i<m_toTransform.getChildrenNumber(); ++i)
+	for (unsigned i = 0; i < m_toTransform.getChildrenNumber(); ++i)
 	{
 		ccHObject* toTransform = m_toTransform.getChild(i);
 		toTransform->setGLTransformation(correctedFinalTrans);
@@ -344,7 +346,7 @@ void ccGraphicalTransformationTool::apply()
 		MainWindow::ccHObjectContext objContext = MainWindow::TheInstance()->removeObjectTemporarilyFromDBTree(toTransform);
 		toTransform->applyGLTransformation_recursive();
 		toTransform->prepareDisplayForRefresh_recursive();
-		MainWindow::TheInstance()->putObjectBackIntoDBTree(toTransform,objContext);
+		MainWindow::TheInstance()->putObjectBackIntoDBTree(toTransform, objContext);
 
 		//special case: if the object is a mesh vertices set, we may have to update the mesh normals!
 		if (toTransform->isA(CC_TYPES::POINT_CLOUD) && toTransform->getParent() && toTransform->getParent()->isKindOf(CC_TYPES::MESH))
@@ -363,12 +365,12 @@ void ccGraphicalTransformationTool::apply()
 
 	//output resulting transformation matrix
 	ccLog::Print("[GraphicalTransformationTool] Applied transformation:");
-	ccLog::Print(correctedFinalTrans.toString(12,' ')); //full precision
+	ccLog::Print(correctedFinalTrans.toString(12, ' ')); //full precision
 #ifdef QT_DEBUG
 	{
-		float phi_rad,theta_rad,psi_rad;
+		float phi_rad, theta_rad, psi_rad;
 		CCVector3f t3D;
-		correctedFinalTrans.getParameters(phi_rad,theta_rad,psi_rad,t3D);
+		correctedFinalTrans.getParameters(phi_rad, theta_rad, psi_rad, t3D);
 		ccLog::Print(QString("Angles(%1,%2,%3) T(%5,%6,%7)").arg(phi_rad).arg(theta_rad).arg(psi_rad).arg(t3D.x).arg(t3D.y).arg(t3D.z));
 	}
 #endif
@@ -376,7 +378,7 @@ void ccGraphicalTransformationTool::apply()
 
 void ccGraphicalTransformationTool::cancel()
 {
-	for (unsigned i=0; i<m_toTransform.getChildrenNumber(); ++i)
+	for (unsigned i = 0; i < m_toTransform.getChildrenNumber(); ++i)
 	{
 		ccHObject* child = m_toTransform.getChild(i);
 		child->resetGLTransformation();

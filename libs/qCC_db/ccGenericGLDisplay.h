@@ -49,13 +49,15 @@ public:
 	virtual bool fromFile(QFile& in, short dataVersion, int flags) override;
 
 	//! Current pixel size (in 'current unit'/pixel)
-	/** This scale is valid eveywhere in ortho. mode 
+	/** This scale is valid eveywhere in ortho. mode
 		or at the focal distance in perspective mode.
 		Warning: doesn't take current zoom into account!
 	**/
+	// 当前像素大小（表示每个像素的大小）
 	float pixelSize;
 
 	//! Current zoom
+	// 当前缩放系数
 	float zoom;
 
 	//! Visualization matrix (rotation only)
@@ -81,11 +83,11 @@ public:
 
 	//! Actual perspective 'zFar' value
 	double zFar;
-	
+
 	//! Rotation pivot point (for object-centered view modes)
 	//! 旋转枢轴点（以对象为中心的视图模式）
 	CCVector3d pivotPoint;
-	
+
 	//! Camera center (for perspective mode)
 	//! 相机中心（透视模式）
 	CCVector3d cameraCenter;
@@ -115,7 +117,7 @@ public:
 		double id = -(iMax / 3.0) * log10(coef);
 		int i = static_cast<int>(id);
 		//cope with numerical inaccuracies
-		if (fabs(id-i) > fabs(id-(i+1)))
+		if (fabs(id - i) > fabs(id - (i + 1)))
 		{
 			++i;
 		}
@@ -133,24 +135,24 @@ struct ccGLCameraParameters
 		, fov_deg(0)
 		, pixelSize(0)
 	{
-	   memset(viewport, 0, 4 * sizeof(int));
+		memset(viewport, 0, 4 * sizeof(int));
 	}
 
 	//! Projects a 3D point in 2D (+ normalized 'z' coordinate)
 	inline bool project(const CCVector3d& input3D, CCVector3d& output2D) const
-	{ 
+	{
 		return ccGL::Project<double, double>(input3D, modelViewMat.data(), projectionMat.data(), viewport, output2D);
 	}
 	//! Projects a 3D point in 2D (+ normalized 'z' coordinate)
-	inline bool project(const CCVector3& input3D, CCVector3d& output2D) const 
-	{ 
+	inline bool project(const CCVector3& input3D, CCVector3d& output2D) const
+	{
 		return ccGL::Project<PointCoordinateType, double>(input3D, modelViewMat.data(), projectionMat.data(), viewport, output2D);
 	}
 
 	//! Unprojects a 2D point (+ normalized 'z' coordinate) in 3D
 	//! 将二维点反投影到三维空间（归一化z坐标）
-	inline bool unproject(const CCVector3d& input2D, CCVector3d& output3D) const 
-	{ 
+	inline bool unproject(const CCVector3d& input2D, CCVector3d& output3D) const
+	{
 		return ccGL::Unproject<double, double>(input2D, modelViewMat.data(), projectionMat.data(), viewport, output3D);
 	}
 	//! Unprojects a 2D point (+ normalized 'z' coordinate) in 3D
@@ -176,7 +178,7 @@ class ccGenericGLDisplay
 {
 public:
 	virtual ~ccGenericGLDisplay() {}
-		
+
 	//! Returns the screen size
 	virtual QSize getScreenSize() const = 0;
 
@@ -212,13 +214,15 @@ public:
 	virtual QFont getLabelDisplayFont() const = 0;
 
 	//! Text alignment
-	enum TextAlign { ALIGN_HLEFT	= 1,
-					 ALIGN_HMIDDLE	= 2,
-					 ALIGN_HRIGHT	= 4,
-					 ALIGN_VTOP		= 8,
-					 ALIGN_VMIDDLE	= 16,
-					 ALIGN_VBOTTOM	= 32,
-					 ALIGN_DEFAULT	= 1 | 8};
+	enum TextAlign {
+		ALIGN_HLEFT = 1,
+		ALIGN_HMIDDLE = 2,
+		ALIGN_HRIGHT = 4,
+		ALIGN_VTOP = 8,
+		ALIGN_VMIDDLE = 16,
+		ALIGN_VBOTTOM = 32,
+		ALIGN_DEFAULT = 1 | 8
+	};
 
 	//! Displays a string at a given 2D position
 	/** This method should be called solely during 2D pass rendering.
@@ -231,13 +235,13 @@ public:
 		\param rgbColor text color (optional)
 		\param font optional font (otherwise default one will be used)
 	**/
-	virtual void displayText(	QString text,
-								int x,
-								int y,
-								unsigned char align = ALIGN_DEFAULT,
-								float bkgAlpha = 0,
-								const unsigned char* rgbColor = 0,
-								const QFont* font = 0) = 0;
+	virtual void displayText(QString text,
+		int x,
+		int y,
+		unsigned char align = ALIGN_DEFAULT,
+		float bkgAlpha = 0,
+		const unsigned char* rgbColor = 0,
+		const QFont* font = 0) = 0;
 
 	//! Displays a string at a given 3D position
 	/** This method should be called solely during 3D pass rendering (see paintGL).
@@ -247,9 +251,9 @@ public:
 		\param font font (optional)
 	**/
 	virtual void display3DLabel(const QString& str,
-								const CCVector3& pos3D,
-								const unsigned char* rgbColor = 0,
-								const QFont& font=QFont()) = 0;
+		const CCVector3& pos3D,
+		const unsigned char* rgbColor = 0,
+		const QFont& font = QFont()) = 0;
 
 	//! Returns the current OpenGL camera parameters
 	//  返回当前opengl相机参数
@@ -272,11 +276,11 @@ public:
 		\param viewerBasedPerspective whether the perspective view should be object-centered (false) or camera-centered (true)
 		\param bubbleViewMode set whether bubble-view mode should be enabled or not (in which case viewerBasedPerspective is forced by default)
 	**/
-	virtual void setupProjectiveViewport(	const ccGLMatrixd& cameraMatrix,
-											float fov_deg = 0.0f,
-											float ar = 1.0f,
-											bool viewerBasedPerspective = true,
-											bool bubbleViewMode = false) = 0;
+	virtual void setupProjectiveViewport(const ccGLMatrixd& cameraMatrix,
+		float fov_deg = 0.0f,
+		float ar = 1.0f,
+		bool viewerBasedPerspective = true,
+		bool bubbleViewMode = false) = 0;
 
 	//! Returns this window as a proper Qt widget
 	virtual QWidget* asWidget() { return 0; }
