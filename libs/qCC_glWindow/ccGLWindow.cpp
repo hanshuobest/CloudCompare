@@ -2646,6 +2646,7 @@ void ccGLWindow::updateConstellationCenterAndZoom(const ccBBox* aBox/*=0*/)
 	ccBBox zoomedBox;
 
 	//the user has provided a valid bouding box
+	// 如果用户已经提供了一个有效的边界盒
 	if (aBox)
 	{
 		zoomedBox = (*aBox);
@@ -2669,12 +2670,14 @@ void ccGLWindow::updateConstellationCenterAndZoom(const ccBBox* aBox/*=0*/)
 	}
 
 	//we compute the pixel size (in world coordinates)
+	// 计算世界坐标系下的像素尺寸
 	{
 		int minScreenSize = std::min(m_glViewport.width(), m_glViewport.height());
 		setPixelSize(minScreenSize > 0 ? static_cast<float>(bbDiag / minScreenSize) : 1.0f);
 	}
 
 	//we set the pivot point on the box center
+	// 在盒子中心设置枢轴点
 	CCVector3d P = CCVector3d::fromArray(zoomedBox.getCenter().u);
 	setPivotPoint(P);
 
@@ -3691,6 +3694,7 @@ void ccGLWindow::mouseMoveEvent(QMouseEvent *event)
 		return;
 	}
 
+	// 鼠标的平移量
 	int dx = x - m_lastMousePos.x();
 	int dy = y - m_lastMousePos.y();
 	setLODEnabled(true, false);
@@ -3705,8 +3709,11 @@ void ccGLWindow::mouseMoveEvent(QMouseEvent *event)
 		if (m_interactionFlags & INTERACT_PAN)
 		{
 			//displacement vector (in "3D")
+			// 三维空间中的位移矢量
 			double pixSize = computeActualPixelSize();
 			CCVector3d u(dx * pixSize, -dy * pixSize, 0);
+
+
 			if (!m_viewportParams.perspectiveView)
 			{
 				{
@@ -5164,6 +5171,7 @@ double ccGLWindow::computeActualPixelSize() const
 		return 1.0;
 
 	//Camera center to pivot vector
+	// 相机中心旋转矢量
 	double zoomEquivalentDist = (m_viewportParams.cameraCenter - m_viewportParams.pivotPoint).norm();
 
 	float currentFov_deg = getFov();
@@ -6418,6 +6426,7 @@ void ccGLWindow::renderText(int x, int y, const QString & str, const QFont & fon
 	assert(glFunc);
 
 	//compute the text bounding rect
+	// 计算文本边界矩形
 	QRect rect = QFontMetrics(font).boundingRect(str);
 
 	//first we create a QImage from the text

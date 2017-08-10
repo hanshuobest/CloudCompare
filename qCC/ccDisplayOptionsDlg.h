@@ -33,6 +33,7 @@
 #include <ui_displayOptionsDlg.h>
 
 //! Dialog to setup display settings
+// 用于设置显示的对话框类
 class ccDisplayOptionsDlg : public QDialog, public Ui::DisplayOptionsDlg
 {
 	Q_OBJECT

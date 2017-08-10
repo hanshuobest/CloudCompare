@@ -111,6 +111,7 @@ public:
 	static void DestroyInstance();
 
 	//! Returns active GL sub-window (if any)
+	// 返回激活的GL子窗口
 	virtual ccGLWindow* getActiveGLWindow() override;
 
 	//! Tries to load several files (and then pushes them into main DB)
@@ -438,7 +439,9 @@ protected slots:
 	void deactivateClippingBoxMode(bool);
 
 	//Graphical transformation
+	// 平移槽函数
 	void activateTranslateRotateMode();
+
 	void deactivateTranslateRotateMode(bool);
 
 	//Graphical segmentation
@@ -634,8 +637,11 @@ protected:
 	ccTracePolylineTool * m_tplTool;
 	//! Section extraction dialog
 	ccSectionExtractionTool* m_seTool;
+
 	//! Graphical transformation dialog
+	// 图形平移对话框
 	ccGraphicalTransformationTool* m_transTool;
+
 	//! Clipping box dialog
 	ccClippingBoxTool* m_clipTool;
 	//! Cloud comparison dialog

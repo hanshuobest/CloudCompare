@@ -136,6 +136,7 @@ public:
 	};
 
 	//! Pivot symbol visibility
+	// 主标志可见性
 	enum PivotVisibility
 	{
 		PIVOT_HIDE,
@@ -172,13 +173,17 @@ public:
 	ccHObject* getSceneDB();
 
 	//replacement for the missing methods of QGLWidget
+	// 替换QGLWidget缺失的方法
 	void renderText(int x, int y, const QString & str, const QFont & font = QFont());
 	void renderText(double x, double y, double z, const QString & str, const QFont & font = QFont());
 
 	//inherited from ccGenericGLDisplay
 	virtual void toBeRefreshed() override;
 	virtual void refresh(bool only2D = false) override;
+
+	// 使投影矩阵无效，并更新FBO标记
 	virtual void invalidateViewport() override;
+
 	virtual void display3DLabel(const QString& str, const CCVector3& pos3D, const unsigned char* rgbColor = 0, const QFont& font = QFont()) override;
 	virtual void displayText(QString text, int x, int y, unsigned char align = ALIGN_DEFAULT, float bkgAlpha = 0, const unsigned char* rgbColor = 0, const QFont* font = 0) override;
 	virtual QFont getTextDisplayFont() const override; //takes rendering zoom into account!
@@ -213,6 +218,7 @@ public:
 
 	//! Activates sun light
 	virtual void setSunLight(bool state);
+
 	//! Toggles sun light
 	virtual void toggleSunLight();
 	//! Returns whether sun light is enabled or not
@@ -232,6 +238,7 @@ public:
 	//! Updates current zoom
 	/** Warning: has no effect in viewer-centered perspective mode
 	**/
+	// 更新当前缩放，在中心透视下无效
 	virtual void updateZoom(float zoomFactor);
 
 	//! Sets pivot visibility
@@ -264,6 +271,7 @@ public:
 	//! Sets camera position
 	/** Emits the 'cameraPosChanged' signal.
 	**/
+	// 设置相机位置，发射相机位置改变信号
 	virtual void setCameraPos(const CCVector3d& P);
 
 	//! Displaces camera
@@ -419,7 +427,9 @@ public:
 	/** FOV is only used in perspective mode.
 	**/
 	virtual void setFov(float fov);
+
 	//! Returns the current f.o.v. (field of view) in degrees
+	// 返回视野角度
 	virtual float getFov() const;
 
 	//! Sets current camera aspect ratio (width/height)
@@ -457,8 +467,9 @@ public:
 	virtual bool areGLFiltersEnabled() const;
 
 	//! Returns the actual pixel size on screen (taking zoom or perspective parameters into account)
-	/** In perspective mode, this value is approximate.返回实际的像素尺寸
+	/** In perspective mode, this value is approximate.
 	**/
+	// 返回实际的像素尺寸
 	virtual double computeActualPixelSize() const;
 
 	//! Returns the zoom value equivalent to the current camera position (perspective only)
@@ -477,6 +488,7 @@ public:
 	/** This is the direction normal to the screen
 		(pointing 'inside') in world base.
 	**/
+	// 返回当前视线方向，垂直于屏幕
 	CCVector3d getCurrentViewDir() const;
 
 	//! Returns current up direction
@@ -743,6 +755,7 @@ signals:
 	void cameraPosChanged(const CCVector3d&);
 
 	//! Signal emitted when the selected object is translated by the user
+	// 当用户移动选择的物体时发射信号
 	void translation(const CCVector3d& t);
 
 	//! Signal emitted when the selected object is rotated by the user
@@ -1288,12 +1301,17 @@ protected: //members
 	bool m_shadersEnabled;
 
 	//! Currently active FBO (frame buffer object)
+	// 当前激活的FBO对象
 	ccFrameBufferObject* m_activeFbo;
+
 	//! First default FBO (frame buffer object)
 	ccFrameBufferObject* m_fbo;
+
 	//! Second default FBO (frame buffer object) - used for stereo rendering
 	ccFrameBufferObject* m_fbo2;
+
 	//! Whether to always use FBO or only for GL filters
+	// 是否始终使用FBO或者仅用于GL过滤器
 	bool m_alwaysUseFBO;
 
 	//! Whether FBO should be updated (or simply displayed as a texture = faster!)

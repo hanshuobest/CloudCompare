@@ -184,8 +184,11 @@ public:
 	//! Returns vector square norm (forces double precision output)
 	//! 返回向量模的平方
 	inline double norm2d() const { return static_cast<double>(x)*x + static_cast<double>(y)*y + static_cast<double>(z)*z; }
+
 	//! Returns vector norm
+	// 返回向量的模
 	inline Type norm() const { return static_cast<Type>(sqrt(norm2d())); }
+
 	//! Returns vector norm (forces double precision output)
 	inline double normd() const { return sqrt(norm2d()); }
 	//! Sets vector norm to unity

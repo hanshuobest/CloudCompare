@@ -76,7 +76,9 @@ public:
 
 	//! Returns center
 	CCVector3 getCenter() const;
+
 	//! Returns diagonal vector
+	// 返回对角线向量
 	CCVector3 getDiagVec() const;
 
 	//! Returns diagonal length
@@ -85,6 +87,7 @@ public:
 	{ 
 		return getDiagVec().norm(); 
 	}
+
 	//! Returns diagonal length (double precision)
 	double getDiagNormd() const { return getDiagVec().normd(); }
 	//! Returns minimal box dimension
